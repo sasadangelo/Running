@@ -4,12 +4,42 @@
     android:background="#000000"
     android:layout_height="match_parent">
 
+    <TextView  android:id="@+id/speedValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:textSize="25sp"
+        android:textColor="#ffffff"
+        android:text=""/>
+
+    <TextView  android:id="@+id/averageSpeedValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="150dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:textSize="25sp"
+        android:textColor="#ffffff"
+        android:text=""/>
+
+    <TextView  android:id="@+id/distanceValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:textSize="25sp"
+        android:textColor="#ffffff"
+        android:text=""/>
+
     <TextView android:id="@+id/timerValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="250dp"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:textSize="40sp"
+        android:textSize="25sp"
         android:textColor="#ffffff"
         android:text="" />
 
