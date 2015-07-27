@@ -1,0 +1,135 @@
+Index: app/app.iml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/app.iml	(revision bfcd68ac7d04e4ed6c9647a3eec5f04177d045ef)
++++ app/app.iml	(revision )
+@@ -88,8 +88,8 @@
+     </content>
+     <orderEntry type="jdk" jdkName="Android API 22 Platform" jdkType="Android SDK" />
+     <orderEntry type="sourceFolder" forTests="false" />
+-    <orderEntry type="library" exported="" name="appcompat-v7-22.1.1" level="project" />
+-    <orderEntry type="library" exported="" name="support-v4-22.1.1" level="project" />
+     <orderEntry type="library" exported="" name="support-annotations-22.1.1" level="project" />
++    <orderEntry type="library" exported="" name="support-v4-22.1.1" level="project" />
++    <orderEntry type="library" exported="" name="appcompat-v7-22.1.1" level="project" />
+   </component>
+ </module>
+\ No newline at end of file
+Index: app/src/main/res/menu/menu_running.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/menu_running.xml	(revision bfcd68ac7d04e4ed6c9647a3eec5f04177d045ef)
++++ app/src/main/res/menu/menu_running.xml	(revision )
+@@ -2,11 +2,6 @@
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools" tools:context=".StartActivity">
+ 
+-    <!--
+-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+-        android:orderInCategory="100" app:showAsAction="never" />
+-    -->
+-
+     <item
+         android:id="@+id/menu_settings"
+         android:titleCondensed="@string/setting_unit"
+Index: app/src/main/java/running/org/running/AppSettings.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- app/src/main/java/running/org/running/AppSettings.java	(revision bfcd68ac7d04e4ed6c9647a3eec5f04177d045ef)
++++ app/src/main/java/running/org/running/AppSettings.java	(revision )
+@@ -3,9 +3,6 @@
+ import android.content.Context;
+ import android.content.SharedPreferences;
+ 
+-/**
+- * Created by Administrator on 7/16/2015.
+- */
+ public class AppSettings {
+     private static final String UNIT_STRING = "MeasureUnit";
+     private static final String PREF_NAME = "SpeedDemo_20100707";
+Index: .idea/misc.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/misc.xml	(revision bfcd68ac7d04e4ed6c9647a3eec5f04177d045ef)
++++ .idea/misc.xml	(revision )
+@@ -13,7 +13,7 @@
+     <ConfirmationsSetting value="0" id="Add" />
+     <ConfirmationsSetting value="0" id="Remove" />
+   </component>
+-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK">
++  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" default="true" assert-keyword="true" jdk-15="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+     <output url="file://$PROJECT_DIR$/build/classes" />
+   </component>
+   <component name="ProjectType">
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/gradle.xml	(revision bfcd68ac7d04e4ed6c9647a3eec5f04177d045ef)
++++ .idea/gradle.xml	(revision )
+@@ -6,7 +6,7 @@
+         <option name="distributionType" value="LOCAL" />
+         <option name="externalProjectPath" value="$PROJECT_DIR$" />
+         <option name="gradleHome" value="C:\Program Files\Android\Android Studio\gradle\gradle-2.2.1" />
+-        <option name="gradleJvm" value="1.7" />
++        <option name="gradleJvm" value="1.8" />
+         <option name="modules">
+           <set>
+             <option value="$PROJECT_DIR$" />
+\ No newline at end of file
+Index: app/src/main/java/running/org/running/RunningActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- app/src/main/java/running/org/running/RunningActivity.java	(revision bfcd68ac7d04e4ed6c9647a3eec5f04177d045ef)
++++ app/src/main/java/running/org/running/RunningActivity.java	(revision )
+@@ -171,7 +171,6 @@
+             int mins = secs / 60;
+             int hours = mins / 60;
+             secs = secs % 60;
+-            int milliseconds = (int) (updatedTime % 1000);
+             if (hours > 0) {
+                 timerValue.setText(getString(R.string.time) + ": " + String.format("%02d", hours) + ":"
+                         + String.format("%02d", mins) + ":"
+Index: app/src/main/java/running/org/running/Constants.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- app/src/main/java/running/org/running/Constants.java	(revision bfcd68ac7d04e4ed6c9647a3eec5f04177d045ef)
++++ app/src/main/java/running/org/running/Constants.java	(revision )
+@@ -1,8 +1,5 @@
+ package running.org.running;
+ 
+-/**
+- * Created by Administrator on 7/15/2015.
+- */
+ interface Constants {
+     int INDEX_KMH = 0;
+     int INDEX_MIN_KM = 1;
+Index: app/src/main/res/menu/menu_start_activity2.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/menu/menu_start_activity2.xml	(revision bfcd68ac7d04e4ed6c9647a3eec5f04177d045ef)
++++ app/src/main/res/menu/menu_start_activity2.xml	(revision )
+@@ -2,6 +2,6 @@
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     xmlns:tools="http://schemas.android.com/tools"
+     tools:context="running.org.running.StartActivity2">
+-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
++    <item android:id="@+id/action_settings" android:title="@string/setting_unit"
+         android:orderInCategory="100" app:showAsAction="never" />
+ </menu>
