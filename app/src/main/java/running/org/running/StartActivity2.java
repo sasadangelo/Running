@@ -12,14 +12,11 @@ import running.org.running.RunningActivity;
 
 public class StartActivity2 extends Activity {
     private Button startButton;
-    private TextView timerValue;
 
-    //private TextView timerValue;
-    //private long startTime = 0L;
-    //private Handler customHandler = new Handler();
-    //long timeInMilliseconds = 0L;
-    //long timeSwapBuff = 0L;
-    //long updatedTime = 0L;
+    private TextView timerValue;
+    private TextView speedValue;
+    private TextView averageSpeedValue;
+    private TextView distanceValue;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,14 +24,20 @@ public class StartActivity2 extends Activity {
 
         startButton = (Button) findViewById(R.id.startButton);
         timerValue = (TextView) findViewById(R.id.timerValue);
+        speedValue = (TextView) findViewById(R.id.speedValue);
+        averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
+        distanceValue = (TextView) findViewById(R.id.distanceValue);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(RunningActivity.TIME_MESSAGE);
-        timerValue.setText(message);
-        //startButton.setOnClickListener(new View.OnClickListener() {
-    //        public void onClick(View view) {
-    //      }
-    //  });
+        String timeMessage = intent.getStringExtra(RunningActivity.TIME_MESSAGE);
+        String speedMessage = intent.getStringExtra(RunningActivity.SPEED_MESSAGE);
+        String averageSpeedMessage = intent.getStringExtra(RunningActivity.AVERAGE_SPEED_MESSAGE);
+        String distanceMessage = intent.getStringExtra(RunningActivity.DISTANCE_MESSAGE);
+
+        timerValue.setText(timeMessage);
+        speedValue.setText(speedMessage);
+        averageSpeedValue.setText(averageSpeedMessage);
+        distanceValue.setText(distanceMessage);
     }
 
     /** Called when the user clicks the Send button */
