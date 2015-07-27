@@ -3,9 +3,6 @@ package running.org.running;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-/**
- * Created by Administrator on 7/16/2015.
- */
 public class AppSettings {
     private static final String UNIT_STRING = "MeasureUnit";
     private static final String PREF_NAME = "SpeedDemo_20100707";
