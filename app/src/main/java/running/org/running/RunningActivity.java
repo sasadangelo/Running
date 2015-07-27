@@ -66,10 +66,10 @@ public class RunningActivity extends Activity implements GPSCallback {
         averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
         distanceValue = (TextView) findViewById(R.id.distanceValue);
 
-        AppSettings.setMeasureUnit(this, Constants.INDEX_KMH);
-        String unitString = measurementUnitString(AppSettings.getMeasureUnit(this));
-        String speedPeaceString = speedPeaceString(AppSettings.getMeasureUnit(this));
-        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getMeasureUnit(this));
+        //AppSettings.getInstance().setMeasureUnit(this, Constants.INDEX_KMH);
+        String unitString = measurementUnitString(AppSettings.getInstance().getMeasureUnit(this));
+        String speedPeaceString = speedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
+        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
 
         timerValue.setText(getString(R.string.time) + ": " + "00:00");
         speedValue.setText(speedPeaceString + ": " + "00:00 " + unitString);
@@ -129,15 +129,17 @@ public class RunningActivity extends Activity implements GPSCallback {
         super.onDestroy();
     }
 
-    @Override
+    //@Override
+    /*
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_running, menu);
 
         return true;
-    }
+    }*/
 
-    @Override
+    //@Override
+    /*
     public boolean onOptionsItemSelected(MenuItem item) {
         boolean result = true;
 
@@ -147,11 +149,11 @@ public class RunningActivity extends Activity implements GPSCallback {
                 break;
             }
             case R.id.unit_kmh: {
-                AppSettings.setMeasureUnit(this, Constants.INDEX_KMH);
+                AppSettings.getInstance().setMeasureUnit(this, Constants.INDEX_KMH);
                 break;
             }
             case R.id.unit_mk: {
-                AppSettings.setMeasureUnit(this, Constants.INDEX_MIN_KM);
+                AppSettings.getInstance().setMeasureUnit(this, Constants.INDEX_MIN_KM);
                 break;
             }
             default: {
@@ -161,7 +163,7 @@ public class RunningActivity extends Activity implements GPSCallback {
         }
 
         return result;
-    }
+    }*/
 
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
@@ -171,7 +173,6 @@ public class RunningActivity extends Activity implements GPSCallback {
             int mins = secs / 60;
             int hours = mins / 60;
             secs = secs % 60;
-            int milliseconds = (int) (updatedTime % 1000);
             if (hours > 0) {
                 timerValue.setText(getString(R.string.time) + ": " + String.format("%02d", hours) + ":"
                         + String.format("%02d", mins) + ":"
@@ -189,7 +190,7 @@ public class RunningActivity extends Activity implements GPSCallback {
     public void onGPSUpdate(Location location)  {
         long now = System.currentTimeMillis();
 
-        if (mBug23937Checked == false) {
+        if (!mBug23937Checked) {
             long gpsTime = location.getTime();
             if (gpsTime > now + 3 * 1000) {
                 mBug23937Delta = now - gpsTime;
@@ -214,18 +215,18 @@ public class RunningActivity extends Activity implements GPSCallback {
             }
             totalTime += timeDiff; //location.getTime()-firstLocation.getTime();
             totalDistance += distanceDiff;
-            speed = distanceDiff*3600000/timeDiff;
-            averageSpeed = totalDistance*3600000/totalTime;
+            speed = timeDiff==0 ? 0 : distanceDiff*3600000/timeDiff;
+            averageSpeed = totalTime==0 ? 0 : totalDistance*3600000/totalTime;
         }
         oldLocation = location;
 
         String speedString = "" + roundDecimal(convertSpeed(speed),2);
         String averageSpeedString = "" + roundDecimal(convertSpeed(averageSpeed),2);
         String totalDistanceString = "" + roundDecimal(totalDistance,2);
-        String unitString = measurementUnitString(AppSettings.getMeasureUnit(this));
+        String unitString = measurementUnitString(AppSettings.getInstance().getMeasureUnit(this));
 
-        String speedPeaceString = speedPeaceString(AppSettings.getMeasureUnit(this));
-        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getMeasureUnit(this));
+        String speedPeaceString = speedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
+        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
 
         speedValue.setText(speedPeaceString + ": " + speedString + " " + unitString);
         averageSpeedValue.setText(averageSpeedPeaceString + ": " + averageSpeedString + " " + unitString);
@@ -247,11 +248,11 @@ public class RunningActivity extends Activity implements GPSCallback {
     }
 
     private double convertSpeed(double speed) {
-        switch(AppSettings.getMeasureUnit(this)) {
+        switch(AppSettings.getInstance().getMeasureUnit(this)) {
             case Constants.INDEX_KMH:
                 return speed;
             case Constants.INDEX_MIN_KM:
-                return 60/speed;
+                return speed==0 ? 0 : 60/speed;
         }
         return speed;
     }
@@ -312,7 +313,7 @@ public class RunningActivity extends Activity implements GPSCallback {
 
         tv.setText(span);
     }
-
+/*
     private void displayAboutDialog() {
         final LayoutInflater inflator = LayoutInflater.from(this);
         final View settingsview = inflator.inflate(R.layout.activity_about, null);
@@ -328,5 +329,5 @@ public class RunningActivity extends Activity implements GPSCallback {
         });
 
         builder.create().show();
-    }
+    }*/
 }

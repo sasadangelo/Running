@@ -4,23 +4,35 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class AppSettings {
+
+    private static AppSettings instance = null;
+
     private static final String UNIT_STRING = "MeasureUnit";
-    private static final String PREF_NAME = "SpeedDemo_20100707";
+    private static final String PREF_NAME = "Running";
 
-    public static int getMeasureUnit(Context context){
-        return getInt(context,AppSettings.UNIT_STRING);
+    public static AppSettings getInstance(){
+        if (instance == null)
+            instance = new AppSettings();
+        return instance;
     }
 
-    public static void setMeasureUnit(Context context,int limit){
-        putInt(context,AppSettings.UNIT_STRING,limit);
+    protected AppSettings() {
     }
 
-    private static int getInt(Context context, String tag) {
+    public int getMeasureUnit(Context context){
+        return getInt(context, AppSettings.UNIT_STRING);
+    }
+
+    public void setMeasureUnit(Context context,int limit){
+        putInt(context, AppSettings.UNIT_STRING, limit);
+    }
+
+    private int getInt(Context context, String tag) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, 0);
         return pref.getInt(tag, 0);
     }
 
-    public static void putInt(Context context, String tag, int value) {
+    public void putInt(Context context, String tag, int value) {
         SharedPreferences pref = context.getSharedPreferences(PREF_NAME, 0);
         SharedPreferences.Editor editor = pref.edit();
 
