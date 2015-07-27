@@ -66,7 +66,6 @@ public class RunningActivity extends Activity implements GPSCallback {
         averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
         distanceValue = (TextView) findViewById(R.id.distanceValue);
 
-        //AppSettings.getInstance().setMeasureUnit(this, Constants.INDEX_KMH);
         String unitString = measurementUnitString(AppSettings.getInstance().getMeasureUnit(this));
         String speedPeaceString = speedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
         String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
@@ -128,42 +127,6 @@ public class RunningActivity extends Activity implements GPSCallback {
 
         super.onDestroy();
     }
-
-    //@Override
-    /*
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_running, menu);
-
-        return true;
-    }*/
-
-    //@Override
-    /*
-    public boolean onOptionsItemSelected(MenuItem item) {
-        boolean result = true;
-
-        switch(item.getItemId()) {
-            case R.id.menu_about: {
-                displayAboutDialog();
-                break;
-            }
-            case R.id.unit_kmh: {
-                AppSettings.getInstance().setMeasureUnit(this, Constants.INDEX_KMH);
-                break;
-            }
-            case R.id.unit_mk: {
-                AppSettings.getInstance().setMeasureUnit(this, Constants.INDEX_MIN_KM);
-                break;
-            }
-            default: {
-                result = super.onOptionsItemSelected(item);
-                break;
-            }
-        }
-
-        return result;
-    }*/
 
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
@@ -313,21 +276,4 @@ public class RunningActivity extends Activity implements GPSCallback {
 
         tv.setText(span);
     }
-/*
-    private void displayAboutDialog() {
-        final LayoutInflater inflator = LayoutInflater.from(this);
-        final View settingsview = inflator.inflate(R.layout.activity_about, null);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-        builder.setTitle(getString(R.string.app_name));
-        builder.setView(settingsview);
-
-        builder.setPositiveButton(android.R.string.ok, new OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-
-        builder.create().show();
-    }*/
 }
