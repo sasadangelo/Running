@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -14,17 +11,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
-import running.org.running.StartActivity2;
 import android.location.Location;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 
-public class RunningActivity extends Activity implements GPSCallback {
+public class RunningActivity extends Activity implements /*GPSCallback,*/ Observer {
     public final static String TIME_MESSAGE = "running.org.running.TIME_MESSAGE";
     public final static String SPEED_MESSAGE = "running.org.running.SPEED_MESSAGE";
     public final static String AVERAGE_SPEED_MESSAGE = "running.org.running.AVERAGE_SPEED_MESSAGE";
@@ -41,7 +33,7 @@ public class RunningActivity extends Activity implements GPSCallback {
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
 
-    private GPSManager gpsManager = null;
+    //private GPSManager gpsManager = null;
     private AbsoluteSizeSpan sizeSpanLarge = null;
     private AbsoluteSizeSpan sizeSpanSmall = null;
     private Location oldLocation = null;
@@ -113,19 +105,19 @@ public class RunningActivity extends Activity implements GPSCallback {
         resumeButton.setVisibility(View.GONE);
         pauseButton.setVisibility(View.VISIBLE);
 
-        gpsManager = new GPSManager();
-        gpsManager.startListening(getApplicationContext());
-        gpsManager.setGPSCallback(this);
+        //gpsManager = new GPSManager();
+        //gpsManager.startListening(getApplicationContext());
+        //gpsManager.setGPSCallback(this);
     }
 
-    @Override
-    protected void onDestroy() {
-        gpsManager.stopListening();
-        gpsManager.setGPSCallback(null);
-        gpsManager = null;
-
-        super.onDestroy();
-    }
+    //@Override
+    //protected void onDestroy() {
+    //    gpsManager.stopListening();
+    //    gpsManager.setGPSCallback(null);
+    //    gpsManager = null;
+    //
+    //    super.onDestroy();
+    //}
 
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
@@ -148,7 +140,13 @@ public class RunningActivity extends Activity implements GPSCallback {
         }
     };
 
-    @Override
+    public void update(Object context) {
+        if (context instanceof Location) {
+            onGPSUpdate((Location) context);
+        }
+    }
+
+    //@Override
     public void onGPSUpdate(Location location)  {
         long now = System.currentTimeMillis();
 

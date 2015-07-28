@@ -3,9 +3,11 @@ package running.org.running;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.location.Location;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.SystemClock;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.AbsoluteSizeSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,21 +16,31 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.content.Intent;
-import running.org.running.RunningActivity;
+import android.provider.Settings;
 
-public class StartActivity2 extends Activity {
+public class StartActivity2 extends Activity implements Observer {
+    private static final int REQUEST_CODE = 0;
+
     private Button startButton;
+    private Button enableGPS;
 
     private TextView timerValue;
     private TextView speedValue;
     private TextView averageSpeedValue;
     private TextView distanceValue;
 
+    private AbsoluteSizeSpan sizeSpanLarge = null;
+    private AbsoluteSizeSpan sizeSpanSmall = null;
+
+    private GPSManager gpsManager = null;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_activity2);
 
         startButton = (Button) findViewById(R.id.startButton);
+        enableGPS = (Button) findViewById(R.id.enableGPSButton);
+
         timerValue = (TextView) findViewById(R.id.timerValue);
         speedValue = (TextView) findViewById(R.id.speedValue);
         averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
@@ -44,6 +56,38 @@ public class StartActivity2 extends Activity {
         speedValue.setText(speedMessage);
         averageSpeedValue.setText(averageSpeedMessage);
         distanceValue.setText(distanceMessage);
+
+        gpsManager = new GPSManager();
+        gpsManager.attach(this);
+        gpsManager.startListening(getApplicationContext());
+        gpsManager.setGPSCallback(this);
+
+        if (gpsManager.isGPSenabled()) {
+            enableGPS.setVisibility(View.GONE);
+            startButton.setVisibility(View.VISIBLE);
+        } else {
+            enableGPS.setVisibility(View.VISIBLE);
+            startButton.setVisibility(View.GONE);
+        }
+    }
+
+    public void update(Object context) {
+        if (context instanceof Location) {
+            onGPSUpdate((Location) context);
+        }
+    }
+
+    public void onGPSUpdate(Location location)  {
+        setSpeedText(R.id.infoMessage, getString(R.string.gpsReady));
+    }
+
+    @Override
+    protected void onDestroy() {
+        gpsManager.stopListening();
+        gpsManager.setGPSCallback(null);
+        gpsManager = null;
+
+        super.onDestroy();
     }
 
     @Override
@@ -80,12 +124,35 @@ public class StartActivity2 extends Activity {
         return result;
     }
 
-    /** Called when the user clicks the Send button */
+    /** Called when the user clicks the Start button */
     public void startRunning(View view) {
         Intent intent = new Intent(this, RunningActivity.class);
         startActivity(intent);
     }
 
+    /** Called when the user clicks the Enable GPS button */
+    public void enableGPS(View view) {
+        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+        startActivityForResult(intent, REQUEST_CODE);
+        //Intent intent = new Intent(this, RunningActivity.class);
+        //startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQUEST_CODE) {
+            if (gpsManager.isGPSenabled()) {
+                ((TextView) findViewById(R.id.infoMessage)).setText(getString(R.string.info));
+                enableGPS.setVisibility(View.GONE);
+                startButton.setVisibility(View.VISIBLE);
+            } else {
+                enableGPS.setVisibility(View.VISIBLE);
+                startButton.setVisibility(View.GONE);
+            }
+        }
+    }
 
     private void displayAboutDialog() {
         final LayoutInflater inflator = LayoutInflater.from(this);
@@ -102,4 +169,17 @@ public class StartActivity2 extends Activity {
         });
 
         builder.create().show();
-    }}
+    }
+
+    private void setSpeedText(int textid, String text) {
+        Spannable span = new SpannableString(text);
+        int firstPos = text.indexOf(32);
+
+        span.setSpan(sizeSpanLarge, 0, firstPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(sizeSpanSmall, firstPos + 1, text.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        TextView tv = ((TextView)findViewById(textid));
+
+        tv.setText(span);
+    }
+}

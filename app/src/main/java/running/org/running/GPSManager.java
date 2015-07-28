@@ -1,20 +1,16 @@
 package running.org.running;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import android.content.Context;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-/**
- * Created by Administrator on 7/15/2015.
- */
-public class GPSManager {
-    private static final int gpsMinTime = 500;
-    private static final int gpsMinDistance = 0;
+public class GPSManager extends Resource implements GPSCallback  {
+    //private static final int gpsMinTime = 500;
+    //private static final int gpsMinDistance = 0;
 
     private static LocationManager locationManager = null;
     private static LocationListener locationListener = null;
@@ -58,6 +54,15 @@ public class GPSManager {
         if (GPSManager.locationManager != null) {
                 GPSManager.locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, GPSManager.locationListener);
         }
+    }
+
+    @Override
+    public void onGPSUpdate(Location location)  {
+        setState(location);
+    }
+
+    public boolean isGPSenabled() {
+        return GPSManager.locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
     public void stopListening() {
