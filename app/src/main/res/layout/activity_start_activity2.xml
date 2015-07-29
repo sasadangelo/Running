@@ -70,7 +70,8 @@
         android:layout_height="45dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="30dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="38dp"
-        android:text="enableGPS" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/enableGPSButtonLabel"
+        android:onClick="enableGPS" />
 </RelativeLayout>

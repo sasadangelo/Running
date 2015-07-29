@@ -8,7 +8,7 @@ public class AppSettings {
     private static AppSettings instance = null;
 
     private static final String UNIT_STRING = "MeasureUnit";
-    private static final String PREF_NAME = "Running";
+    private static final String PREF_NAME = "RunningApp";
 
     public static AppSettings getInstance(){
         if (instance == null)

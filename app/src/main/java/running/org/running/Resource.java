@@ -14,4 +14,6 @@ public abstract class Resource {
             observer.update(context);
         }
     }
+
+    public abstract void destroy();
 }

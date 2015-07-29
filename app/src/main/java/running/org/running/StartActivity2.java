@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +20,7 @@ import android.content.Intent;
 import android.provider.Settings;
 
 public class StartActivity2 extends Activity implements Observer {
+    private static final String LOG_TAG = "StartActivity2";
     private static final int REQUEST_CODE = 0;
 
     private Button startButton;
@@ -32,9 +34,10 @@ public class StartActivity2 extends Activity implements Observer {
     private AbsoluteSizeSpan sizeSpanLarge = null;
     private AbsoluteSizeSpan sizeSpanSmall = null;
 
-    private GPSManager gpsManager = null;
+    private GPSResource gpsResource = null;
 
     public void onCreate(Bundle savedInstanceState) {
+        Log.i(LOG_TAG, "onCreate -- begin");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_activity2);
 
@@ -57,12 +60,11 @@ public class StartActivity2 extends Activity implements Observer {
         averageSpeedValue.setText(averageSpeedMessage);
         distanceValue.setText(distanceMessage);
 
-        gpsManager = new GPSManager();
-        gpsManager.attach(this);
-        gpsManager.startListening(getApplicationContext());
-        gpsManager.setGPSCallback(this);
+        gpsResource = GPSResource.getInstance();
+        gpsResource.attach(this);
+        //gpsResource.startListening();
 
-        if (gpsManager.isGPSenabled()) {
+        if (gpsResource.isGPSenabled()) {
             enableGPS.setVisibility(View.GONE);
             startButton.setVisibility(View.VISIBLE);
         } else {
@@ -71,27 +73,29 @@ public class StartActivity2 extends Activity implements Observer {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        Log.i(LOG_TAG, "onDestroy -- begin");
+        gpsResource.destroy();
+        gpsResource = null;
+        super.onDestroy();
+    }
+
     public void update(Object context) {
+        Log.i(LOG_TAG, "update -- begin");
         if (context instanceof Location) {
             onGPSUpdate((Location) context);
         }
     }
 
     public void onGPSUpdate(Location location)  {
+        Log.i(LOG_TAG, "onGPSUpdate -- begin");
         setSpeedText(R.id.infoMessage, getString(R.string.gpsReady));
     }
 
     @Override
-    protected void onDestroy() {
-        gpsManager.stopListening();
-        gpsManager.setGPSCallback(null);
-        gpsManager = null;
-
-        super.onDestroy();
-    }
-
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.i(LOG_TAG, "onCreateOptionsMenu -- begin");
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_start_activity2, menu);
 
@@ -100,6 +104,7 @@ public class StartActivity2 extends Activity implements Observer {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(LOG_TAG, "onOptionsItemSelected -- begin");
         boolean result = true;
 
         switch(item.getItemId()) {
@@ -126,24 +131,25 @@ public class StartActivity2 extends Activity implements Observer {
 
     /** Called when the user clicks the Start button */
     public void startRunning(View view) {
+        Log.i(LOG_TAG, "startRunning -- begin");
         Intent intent = new Intent(this, RunningActivity.class);
         startActivity(intent);
     }
 
     /** Called when the user clicks the Enable GPS button */
     public void enableGPS(View view) {
+        Log.i(LOG_TAG, "enableGPS -- begin");
         Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
         startActivityForResult(intent, REQUEST_CODE);
-        //Intent intent = new Intent(this, RunningActivity.class);
-        //startActivity(intent);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.i(LOG_TAG, "onActivityResult -- begin");
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == REQUEST_CODE) {
-            if (gpsManager.isGPSenabled()) {
+            if (gpsResource.isGPSenabled()) {
                 ((TextView) findViewById(R.id.infoMessage)).setText(getString(R.string.info));
                 enableGPS.setVisibility(View.GONE);
                 startButton.setVisibility(View.VISIBLE);
@@ -155,6 +161,7 @@ public class StartActivity2 extends Activity implements Observer {
     }
 
     private void displayAboutDialog() {
+        Log.i(LOG_TAG, "displayAboutDialog -- begin");
         final LayoutInflater inflator = LayoutInflater.from(this);
         final View settingsview = inflator.inflate(R.layout.activity_about, null);
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -172,6 +179,7 @@ public class StartActivity2 extends Activity implements Observer {
     }
 
     private void setSpeedText(int textid, String text) {
+        Log.i(LOG_TAG, "setSpeedText -- begin");
         Spannable span = new SpannableString(text);
         int firstPos = text.indexOf(32);
 

@@ -11,8 +11,9 @@
     <string name="distance">Distanza</string>
     <string name="unit_kmh">Km/h</string>
     <string name="unit_km">Km</string>
-    <string name="unit_minKm">min. al Km</string>
+    <string name="unit_minKm">min per Km</string>
     <string name="info">Ricerca GPS...</string>
+    <string name="enableGPSButtonLabel">Abilita GPS</string>
     <string name="startButtonLabel">Vai a fare una Corsa</string>
     <string name="stopButtonLabel">Termina</string>
     <string name="pauseButtonLabel">Sospendi</string>

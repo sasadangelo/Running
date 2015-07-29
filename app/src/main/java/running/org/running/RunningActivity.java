@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,7 +17,9 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 
-public class RunningActivity extends Activity implements /*GPSCallback,*/ Observer {
+public class RunningActivity extends Activity implements Observer {
+    private static final String LOG_TAG = "RunningActivity";
+
     public final static String TIME_MESSAGE = "running.org.running.TIME_MESSAGE";
     public final static String SPEED_MESSAGE = "running.org.running.SPEED_MESSAGE";
     public final static String AVERAGE_SPEED_MESSAGE = "running.org.running.AVERAGE_SPEED_MESSAGE";
@@ -33,7 +36,7 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
     long timeSwapBuff = 0L;
     long updatedTime = 0L;
 
-    //private GPSManager gpsManager = null;
+    private GPSResource gpsResource = null;
     private AbsoluteSizeSpan sizeSpanLarge = null;
     private AbsoluteSizeSpan sizeSpanSmall = null;
     private Location oldLocation = null;
@@ -49,6 +52,8 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.i(LOG_TAG, "onCreate -- begin");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_running);
 
@@ -105,19 +110,17 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
         resumeButton.setVisibility(View.GONE);
         pauseButton.setVisibility(View.VISIBLE);
 
-        //gpsManager = new GPSManager();
-        //gpsManager.startListening(getApplicationContext());
-        //gpsManager.setGPSCallback(this);
+        gpsResource = GPSResource.getInstance();
+        gpsResource.attach(this);
     }
 
-    //@Override
-    //protected void onDestroy() {
-    //    gpsManager.stopListening();
-    //    gpsManager.setGPSCallback(null);
-    //    gpsManager = null;
-    //
-    //    super.onDestroy();
-    //}
+    @Override
+    protected void onDestroy() {
+        Log.i(LOG_TAG, "onDestroy -- begin");
+        gpsResource.destroy();
+        gpsResource = null;
+        super.onDestroy();
+    }
 
     private Runnable updateTimerThread = new Runnable() {
         public void run() {
@@ -141,13 +144,14 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
     };
 
     public void update(Object context) {
+        Log.i(LOG_TAG, "update -- begin");
         if (context instanceof Location) {
             onGPSUpdate((Location) context);
         }
     }
 
-    //@Override
     public void onGPSUpdate(Location location)  {
+        Log.i(LOG_TAG, "onGPSUpdate -- begin");
         long now = System.currentTimeMillis();
 
         if (!mBug23937Checked) {
@@ -199,6 +203,7 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
     }
 
     private double roundDecimal(double value, final int decimalPlace) {
+        Log.i(LOG_TAG, "roundDecimal -- begin");
         BigDecimal bd = new BigDecimal(value);
 
         bd = bd.setScale(decimalPlace, RoundingMode.HALF_UP);
@@ -208,6 +213,7 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
     }
 
     private double convertSpeed(double speed) {
+        Log.i(LOG_TAG, "convertSpeed -- begin");
         switch(AppSettings.getInstance().getMeasureUnit(this)) {
             case Constants.INDEX_KMH:
                 return speed;
@@ -218,6 +224,7 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
     }
 
     private String measurementUnitString(int unitIndex) {
+        Log.i(LOG_TAG, "measurementUnitString -- begin");
         String string = getString(R.string.unit_kmh);
 
         switch(unitIndex) {
@@ -233,6 +240,7 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
     }
 
     private String speedPeaceString(int unitIndex) {
+        Log.i(LOG_TAG, "speedPeaceString -- begin");
         String string = getString(R.string.speed);
 
         switch(unitIndex) {
@@ -248,6 +256,7 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
     }
 
     private String averageSpeedPeaceString(int unitIndex) {
+        Log.i(LOG_TAG, "speedPeaceString -- begin");
         String string = getString(R.string.averageSpeed);
 
         switch(unitIndex) {
@@ -263,10 +272,11 @@ public class RunningActivity extends Activity implements /*GPSCallback,*/ Observ
     }
 
     private void setSpeedText(int textid, String text) {
+        Log.i(LOG_TAG, "setSpeedText -- begin");
         Spannable span = new SpannableString(text);
         int firstPos = text.indexOf(32);
 
-        span.setSpan(sizeSpanLarge, 0, firstPos,Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        span.setSpan(sizeSpanLarge, 0, firstPos, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         span.setSpan(sizeSpanSmall, firstPos + 1, text.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         TextView tv = ((TextView)findViewById(textid));
