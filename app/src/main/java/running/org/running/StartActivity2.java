@@ -65,6 +65,7 @@ public class StartActivity2 extends Activity implements Observer {
         //gpsResource.startListening();
 
         if (gpsResource.isGPSenabled()) {
+            ((TextView) findViewById(R.id.infoMessage)).setText(getString(R.string.info));
             enableGPS.setVisibility(View.GONE);
             startButton.setVisibility(View.VISIBLE);
         } else {
