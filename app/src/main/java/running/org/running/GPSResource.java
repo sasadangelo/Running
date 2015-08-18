@@ -15,15 +15,18 @@ public class GPSResource extends Resource {
     private LocationManager locationManager = null;
     private LocationListener locationListener = null;
 
+    //private boolean gpsFixAcquired = false;
+    //private Location oldLocation = null;
+
     // If the location provided has an accurancy <= ACCURACY (10 meter) the location will be
     // considered, otherwise it will be discarded
-    private final float ACCURACY = 10;
+    private final float FIX_ACCURACY = 10;
 
     // If the GPS signal comes at least from 2 satellites, it can be considered good.
-    private final int SATELLITES = 2;
+    private final int FIX_SATELLITES = 2;
 
     // If the GPS signal comes within 3 seconds, it will be considered good enough
-    private final int mFixTime = 3;
+    private final int FIX_TIME = 3;
 
     public static GPSResource getInstance() {
         Log.i(LOG_TAG, "getInstance -- begin");
@@ -40,6 +43,14 @@ public class GPSResource extends Resource {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
+                //oldLocation = location;
+                //if (location.hasAccuracy() && location.getAccuracy() < FIX_ACCURACY) {
+                //    gpsFixAcquired = true;
+                //} else if (oldLocation != null && (location.getTime() - oldLocation.getTime()) <= (1000 * FIX_TIME)) {
+                //    gpsFixAcquired = true;
+                //} else if (mKnownSatellites >= FIX_SATELLITES) {
+                //    gpsFixAcquired = true;
+                //}
                 setState(location);
             }
 
@@ -61,9 +72,15 @@ public class GPSResource extends Resource {
         }
     }
 
-    public boolean isGPSenabled() {
-        Log.i(LOG_TAG, "isGPSenabled -- begin");
+    public boolean isGPSEnabled() {
+        Log.i(LOG_TAG, "isGPSEnabled -- begin");
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
+    public boolean isGPSFixAcquired() {
+        Log.i(LOG_TAG, "isGPSFixAcquired -- begin");
+        //return gpsFixAcquired;
+        return false;
     }
 
     public void destroy() {

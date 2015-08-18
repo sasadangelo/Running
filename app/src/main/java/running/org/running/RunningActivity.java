@@ -78,7 +78,7 @@ public class RunningActivity extends Activity implements Observer {
         stopButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 customHandler.removeCallbacks(updateTimerThread);
-                Intent intent = new Intent(RunningActivity.this, StartActivity2.class);
+                Intent intent = new Intent(RunningActivity.this, StartActivity.class);
                 intent.putExtra(TIME_MESSAGE, timerValue.getText().toString());
                 intent.putExtra(SPEED_MESSAGE, speedValue.getText().toString());
                 intent.putExtra(AVERAGE_SPEED_MESSAGE, averageSpeedValue.getText().toString());

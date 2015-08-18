@@ -19,8 +19,8 @@ import android.widget.TextView;
 import android.content.Intent;
 import android.provider.Settings;
 
-public class StartActivity2 extends Activity implements Observer {
-    private static final String LOG_TAG = "StartActivity2";
+public class StartActivity extends Activity implements Observer {
+    private static final String LOG_TAG = "StartActivity";
     private static final int REQUEST_CODE = 0;
 
     private Button startButton;
@@ -39,7 +39,7 @@ public class StartActivity2 extends Activity implements Observer {
     public void onCreate(Bundle savedInstanceState) {
         Log.i(LOG_TAG, "onCreate -- begin");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_start_activity2);
+        setContentView(R.layout.activity_start_activity);
 
         startButton = (Button) findViewById(R.id.startButton);
         enableGPS = (Button) findViewById(R.id.enableGPSButton);
@@ -64,7 +64,7 @@ public class StartActivity2 extends Activity implements Observer {
         gpsResource.attach(this);
         //gpsResource.startListening();
 
-        if (gpsResource.isGPSenabled()) {
+        if (gpsResource.isGPSEnabled()) {
             ((TextView) findViewById(R.id.infoMessage)).setText(getString(R.string.info));
             enableGPS.setVisibility(View.GONE);
             startButton.setVisibility(View.VISIBLE);
@@ -98,7 +98,7 @@ public class StartActivity2 extends Activity implements Observer {
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.i(LOG_TAG, "onCreateOptionsMenu -- begin");
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_start_activity2, menu);
+        inflater.inflate(R.menu.menu_start_activity, menu);
 
         return true;
     }
@@ -133,8 +133,29 @@ public class StartActivity2 extends Activity implements Observer {
     /** Called when the user clicks the Start button */
     public void startRunning(View view) {
         Log.i(LOG_TAG, "startRunning -- begin");
-        Intent intent = new Intent(this, RunningActivity.class);
-        startActivity(intent);
+
+        if (!GPSResource.getInstance().isGPSFixAcquired()) {
+            try {
+                new AlertDialog.Builder(StartActivity.this)
+                        .setTitle("Start running")
+                        .setMessage("GPS signal was not found, are you sure you want to start the running session?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent = new Intent(StartActivity.this, RunningActivity.class);
+                                startActivity(intent);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+            } catch(Throwable e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /** Called when the user clicks the Enable GPS button */
@@ -150,7 +171,7 @@ public class StartActivity2 extends Activity implements Observer {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == REQUEST_CODE) {
-            if (gpsResource.isGPSenabled()) {
+            if (gpsResource.isGPSEnabled()) {
                 ((TextView) findViewById(R.id.infoMessage)).setText(getString(R.string.info));
                 enableGPS.setVisibility(View.GONE);
                 startButton.setVisibility(View.VISIBLE);
