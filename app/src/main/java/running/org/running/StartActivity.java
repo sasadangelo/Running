@@ -84,12 +84,12 @@ public class StartActivity extends Activity implements Observer {
 
     public void update(Object context) {
         Log.i(LOG_TAG, "update -- begin");
-        if (context instanceof Location) {
-            onGPSUpdate((Location) context);
+        if (context == null) {
+            onGPSUpdate();
         }
     }
 
-    public void onGPSUpdate(Location location)  {
+    public void onGPSUpdate()  {
         Log.i(LOG_TAG, "onGPSUpdate -- begin");
         setSpeedText(R.id.infoMessage, getString(R.string.gpsReady));
     }

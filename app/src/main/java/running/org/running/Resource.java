@@ -9,6 +9,10 @@ public abstract class Resource {
         observers.add(observer);
     }
 
+    public void setState() {
+        setState(null);
+    }
+
     public void setState(Object context) {
         for (Observer observer : observers) {
             observer.update(context);
