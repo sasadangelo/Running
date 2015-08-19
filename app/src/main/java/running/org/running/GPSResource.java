@@ -4,6 +4,9 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.LocationProvider;
+import android.location.GpsStatus;
+import android.location.GpsSatellite;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -14,9 +17,12 @@ public class GPSResource extends Resource {
 
     private LocationManager locationManager = null;
     private LocationListener locationListener = null;
+    private GpsStatus.Listener gpsStatusListener = null;
 
-    //private boolean gpsFixAcquired = false;
-    //private Location oldLocation = null;
+    private Location oldLocation = null;
+
+    int knownSatellites = 0;
+    int usedInLastFixSatellites = 0;
 
     // If the location provided has an accurancy <= ACCURACY (10 meter) the location will be
     // considered, otherwise it will be discarded
@@ -27,6 +33,10 @@ public class GPSResource extends Resource {
 
     // If the GPS signal comes within 3 seconds, it will be considered good enough
     private final int FIX_TIME = 3;
+
+    // If true this boolean specify that the GPS signal has been acquired. If it is false then
+    // the GPS signal is lost.
+    private boolean gpsFixAcquired = false;
 
     public static GPSResource getInstance() {
         Log.i(LOG_TAG, "getInstance -- begin");
@@ -43,32 +53,83 @@ public class GPSResource extends Resource {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
-                //oldLocation = location;
-                //if (location.hasAccuracy() && location.getAccuracy() < FIX_ACCURACY) {
-                //    gpsFixAcquired = true;
-                //} else if (oldLocation != null && (location.getTime() - oldLocation.getTime()) <= (1000 * FIX_TIME)) {
-                //    gpsFixAcquired = true;
-                //} else if (mKnownSatellites >= FIX_SATELLITES) {
-                //    gpsFixAcquired = true;
-                //}
+                oldLocation = location;
+                if (location.hasAccuracy() && location.getAccuracy() < FIX_ACCURACY) {
+                    gpsFixAcquired = true;
+                } else if (oldLocation != null && (location.getTime() - oldLocation.getTime()) <= (1000 * FIX_TIME)) {
+                    gpsFixAcquired = true;
+                } else if (knownSatellites >= FIX_SATELLITES) {
+                    gpsFixAcquired = true;
+                }
                 setState(location);
             }
 
             @Override
             public void onProviderDisabled(final String provider) {
+                if (provider.equalsIgnoreCase("gps")) {
+                    gpsFixAcquired = false;
+                    knownSatellites = 0;
+                    usedInLastFixSatellites = 0;
+                    oldLocation = null;
+                    setState(null);
+                }
             }
 
             @Override
             public void onProviderEnabled(final String provider) {
+                if (provider.equalsIgnoreCase("gps")) {
+                    knownSatellites = 0;
+                    usedInLastFixSatellites = 0;
+                    oldLocation = null;
+                    setState(null);
+                }
             }
 
             @Override
             public void onStatusChanged(final String provider, final int status, final Bundle extras) {
+                if (provider.equalsIgnoreCase("gps")) {
+                    if (status == LocationProvider.OUT_OF_SERVICE ||
+                            status == LocationProvider.TEMPORARILY_UNAVAILABLE) {
+                        gpsFixAcquired = false;
+                        knownSatellites = 0;
+                        usedInLastFixSatellites = 0;
+                        oldLocation = null;
+                        setState(null);
+                    }
+                    setState(null);
+                }
+            }
+        };
+
+        gpsStatusListener = new GpsStatus.Listener() {
+            @Override
+            public void onGpsStatusChanged(int event) {
+                if (locationManager == null)
+                    return;
+
+                android.location.GpsStatus gpsStatus = locationManager
+                        .getGpsStatus(null);
+
+                if (gpsStatus == null)
+                    return;
+
+                int cnt0 = 0, cnt1 = 0;
+                Iterable<GpsSatellite> satelliteList = gpsStatus.getSatellites();
+                for (GpsSatellite satellite : satelliteList) {
+                    cnt0++;
+                    if (satellite.usedInFix()) {
+                        cnt1++;
+                    }
+                }
+                knownSatellites = cnt0;
+                usedInLastFixSatellites = cnt1;
+                setState(null);
             }
         };
 
         if (locationManager != null) {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
+            locationManager.addGpsStatusListener(gpsStatusListener);
         }
     }
 
@@ -77,10 +138,9 @@ public class GPSResource extends Resource {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
     }
 
-    public boolean isGPSFixAcquired() {
-        Log.i(LOG_TAG, "isGPSFixAcquired -- begin");
-        //return gpsFixAcquired;
-        return false;
+    public boolean isGpsFixAcquired() {
+        Log.i(LOG_TAG, "isGpsFixAcquired -- begin");
+        return gpsFixAcquired;
     }
 
     public void destroy() {
@@ -88,8 +148,12 @@ public class GPSResource extends Resource {
         if (locationManager != null && locationListener != null) {
             locationManager.removeUpdates(locationListener);
         }
+        if (locationManager != null && gpsStatusListener != null) {
+            locationManager.removeGpsStatusListener(gpsStatusListener);
+        }
         locationManager = null;
         locationListener = null;
+        gpsStatusListener = null;
         instance = null;
     }
 }

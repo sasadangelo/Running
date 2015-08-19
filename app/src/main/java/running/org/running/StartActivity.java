@@ -134,7 +134,7 @@ public class StartActivity extends Activity implements Observer {
     public void startRunning(View view) {
         Log.i(LOG_TAG, "startRunning -- begin");
 
-        if (!GPSResource.getInstance().isGPSFixAcquired()) {
+        if (!GPSResource.getInstance().isGpsFixAcquired()) {
             try {
                 new AlertDialog.Builder(StartActivity.this)
                         .setTitle("Start running")
