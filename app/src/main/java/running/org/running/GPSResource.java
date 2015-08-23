@@ -152,7 +152,7 @@ public class GPSResource extends Resource {
 
     public boolean isGPSEnabled() {
         Log.i(LOG_TAG, "isGPSEnabled -- begin");
-        boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         Log.i(LOG_TAG, "isGPSEnabled: " + gpsEnabled);
         return gpsEnabled;
     }
