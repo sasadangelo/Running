@@ -24,7 +24,7 @@ public class GPSResource extends Resource {
     int knownSatellites = 0;
     int usedInLastFixSatellites = 0;
 
-    // If the location provided has an accurancy <= ACCURACY (10 meter) the location will be
+    // If the location provided has an accuracy <= ACCURACY (10 meter) the location will be
     // considered, otherwise it will be discarded
     private final float FIX_ACCURACY = 10;
 
@@ -77,6 +77,7 @@ public class GPSResource extends Resource {
             public void onProviderDisabled(final String provider) {
                 Log.i(LOG_TAG, "onLocationChanged -- begin");
                 if (provider.equalsIgnoreCase("gps")) {
+                    Log.i(LOG_TAG, "User disabled GPS");
                     gpsFixAcquired = false;
                     knownSatellites = 0;
                     usedInLastFixSatellites = 0;
@@ -89,6 +90,7 @@ public class GPSResource extends Resource {
             public void onProviderEnabled(final String provider) {
                 Log.i(LOG_TAG, "onProviderEnabled -- begin");
                 if (provider.equalsIgnoreCase("gps")) {
+                    Log.i(LOG_TAG, "User enabled GPS");
                     knownSatellites = 0;
                     usedInLastFixSatellites = 0;
                     oldLocation = null;
@@ -102,13 +104,13 @@ public class GPSResource extends Resource {
                 if (provider.equalsIgnoreCase("gps")) {
                     if (status == LocationProvider.OUT_OF_SERVICE ||
                             status == LocationProvider.TEMPORARILY_UNAVAILABLE) {
+                        Log.i(LOG_TAG, "GPS signal lost");
                         gpsFixAcquired = false;
                         knownSatellites = 0;
                         usedInLastFixSatellites = 0;
                         oldLocation = null;
                         setState();
                     }
-                    setState();
                 }
             }
         };
@@ -136,6 +138,8 @@ public class GPSResource extends Resource {
                 }
                 knownSatellites = cnt0;
                 usedInLastFixSatellites = cnt1;
+                Log.i(LOG_TAG, "knownSatellites: " + knownSatellites + "usedInLastFixSatellites: " +
+                        usedInLastFixSatellites);
                 setState();
             }
         };
@@ -148,11 +152,14 @@ public class GPSResource extends Resource {
 
     public boolean isGPSEnabled() {
         Log.i(LOG_TAG, "isGPSEnabled -- begin");
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        Log.i(LOG_TAG, "isGPSEnabled: " + gpsEnabled);
+        return gpsEnabled;
     }
 
     public boolean isGpsFixAcquired() {
         Log.i(LOG_TAG, "isGpsFixAcquired -- begin");
+        Log.i(LOG_TAG, "isGpsFixAcquired: " + gpsFixAcquired);
         return gpsFixAcquired;
     }
 
