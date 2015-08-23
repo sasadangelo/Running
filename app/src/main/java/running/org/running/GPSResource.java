@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class GPSResource extends Resource {
-    private static final String LOG_TAG = "GPSResource";
+    private static final String LOG_TAG = "Run4Fun.GPSResource";
 
     protected static GPSResource instance = null;
 
@@ -54,6 +54,11 @@ public class GPSResource extends Resource {
             @Override
             public void onLocationChanged(final Location location) {
                 Log.i(LOG_TAG, "onLocationChanged -- begin");
+                if (location.hasAccuracy()) {
+                    Log.i(LOG_TAG, "GPS location has accuracy = " + location.getAccuracy());
+                } else {
+                    Log.i(LOG_TAG, "GPS location is not accurate.");
+                }
                 if (location.hasAccuracy() && location.getAccuracy() < FIX_ACCURACY) {
                     Log.i(LOG_TAG, "GPS fix acquired. Accuracy < 10 m");
                     gpsFixAcquired = true;

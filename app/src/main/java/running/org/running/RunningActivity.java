@@ -18,7 +18,7 @@ import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 
 public class RunningActivity extends Activity implements Observer {
-    private static final String LOG_TAG = "RunningActivity";
+    private static final String LOG_TAG = "Run4Fun.RunningActivity";
 
     public final static String TIME_MESSAGE = "running.org.running.TIME_MESSAGE";
     public final static String SPEED_MESSAGE = "running.org.running.SPEED_MESSAGE";

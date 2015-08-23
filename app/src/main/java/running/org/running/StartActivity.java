@@ -20,7 +20,7 @@ import android.content.Intent;
 import android.provider.Settings;
 
 public class StartActivity extends Activity implements Observer {
-    private static final String LOG_TAG = "StartActivity";
+    private static final String LOG_TAG = "Run4Fun.StartActivity";
     private static final int REQUEST_CODE = 0;
 
     private Button startButton;
@@ -62,15 +62,19 @@ public class StartActivity extends Activity implements Observer {
 
         gpsResource = GPSResource.getInstance();
         gpsResource.attach(this);
-        //gpsResource.startListening();
 
         if (gpsResource.isGPSEnabled()) {
-            ((TextView) findViewById(R.id.infoMessage)).setText(getString(R.string.info));
+            //((TextView) findViewById(R.id.infoMessage)).setText(getString(R.string.info));
             enableGPS.setVisibility(View.GONE);
             startButton.setVisibility(View.VISIBLE);
         } else {
             enableGPS.setVisibility(View.VISIBLE);
             startButton.setVisibility(View.GONE);
+        }
+        if (gpsResource.isGpsFixAcquired()) {
+            setSpeedText(R.id.infoMessage, getString(R.string.gpsReady));
+        } else {
+            setSpeedText(R.id.infoMessage, getString(R.string.info));
         }
     }
 
@@ -91,7 +95,19 @@ public class StartActivity extends Activity implements Observer {
 
     public void onGPSUpdate()  {
         Log.i(LOG_TAG, "onGPSUpdate -- begin");
-        setSpeedText(R.id.infoMessage, getString(R.string.gpsReady));
+        GPSResource gpsResource = GPSResource.getInstance();
+        if (gpsResource.isGpsFixAcquired()) {
+            setSpeedText(R.id.infoMessage, getString(R.string.gpsReady));
+        } else {
+            setSpeedText(R.id.infoMessage, getString(R.string.info));
+        }
+        if (gpsResource.isGPSEnabled()) {
+            enableGPS.setVisibility(View.GONE);
+            startButton.setVisibility(View.VISIBLE);
+        } else {
+            enableGPS.setVisibility(View.VISIBLE);
+            startButton.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -147,7 +163,7 @@ public class StartActivity extends Activity implements Observer {
                         })
                         .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
+                              // do nothing
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
