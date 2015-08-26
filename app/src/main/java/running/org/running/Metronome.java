@@ -39,7 +39,7 @@ public class Metronome extends ActionBarActivity {
 	
 	private static final String PREFS = "metronome.prefs";
 
-	private boolean metronomeEnabled = false;
+	private boolean metronomeChecked = false;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -112,16 +112,48 @@ public class Metronome extends ActionBarActivity {
 		restart();
 
 		CheckBox metronomecheckBox= (CheckBox) findViewById(R.id.checkbox_metronome);
-		metronomecheckBox.setChecked(metronomeEnabled);
+		metronomecheckBox.setChecked(metronomeChecked);
 
 		RadioGroup metronomeRadioGroup= (RadioGroup) findViewById(R.id.radiogroup_metronome);
-		if (metronomeEnabled) {
+		if (metronomeChecked) {
 			metronomeRadioGroup.setVisibility(View.VISIBLE);
 		} else {
 			metronomeRadioGroup.setVisibility(View.GONE);
 		}
 	}
 
+	public void onCheckboxClicked(View view) {
+		metronomeChecked = ((CheckBox) view).isChecked();
+
+		RadioGroup metronomeRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_metronome);
+
+		switch(view.getId()) {
+			case R.id.radiogroup_metronome:
+				if (metronomeChecked) {
+					metronomeRadioGroup.setVisibility(View.VISIBLE);
+				} else {
+					metronomeRadioGroup.setVisibility(View.GONE);
+				}
+				break;
+		}
+	}
+
+	public void onRadioButtonClicked(View view) {
+		// Is the button now checked?
+		boolean checked = ((RadioButton) view).isChecked();
+
+		// Check which radio button was clicked
+		switch(view.getId()) {
+			case R.id.radio_metronome_continue:
+				if (checked)
+					// Pirates are the best
+					break;
+			case R.id.radio_metronome_intervals:
+				if (checked)
+					// Ninjas rule
+					break;
+		}
+	}
 
 
 
@@ -154,38 +186,6 @@ public class Metronome extends ActionBarActivity {
 		}
 	}
 
-	public void onCheckboxClicked(View view) {
-		metronomeEnabled = ((CheckBox) view).isChecked();
-
-		RadioGroup metronomeRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_metronome);
-
-		switch(view.getId()) {
-			case R.id.radiogroup_metronome:
-				if (metronomeEnabled) {
-					metronomeRadioGroup.setVisibility(View.VISIBLE);
-				} else {
-					metronomeRadioGroup.setVisibility(View.GONE);
-				}
-				break;
-		}
-	}
-
-	public void onRadioButtonClicked(View view) {
-		// Is the button now checked?
-		boolean checked = ((RadioButton) view).isChecked();
-
-		// Check which radio button was clicked
-		switch(view.getId()) {
-			case R.id.radio_metronome_continue:
-				if (checked)
-					// Pirates are the best
-					break;
-			case R.id.radio_metronome_intervals:
-				if (checked)
-					// Ninjas rule
-					break;
-		}
-	}
 
 	private void restart()
 	{
