@@ -5,6 +5,13 @@
 
     <TableLayout android:layout_height="wrap_content" android:paddingTop="20sp" android:paddingBottom="20sp"
         android:layout_width="fill_parent">
+        <CheckBox
+            android:id="@+id/metronome_on_off"
+            android:layout_width="wrap_content"
+            android:text="Prova"
+            android:layout_height="wrap_content"
+            android:onClick="onCheckboxClicked"
+            />
         <TableRow>
             <Button android:id="@+id/button1" android:text="1"
                 android:layout_weight="1" />

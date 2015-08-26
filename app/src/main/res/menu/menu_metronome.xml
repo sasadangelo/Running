@@ -3,5 +3,5 @@
     <item android:id="@+id/action_metronome"
         android:icon="@drawable/ic_action_metronome"
         app:showAsAction="ifRoom"
-        android:title="Metronome"/>
+        android:title="@string/metronomeCheckBoxLabel"/>
 </menu>

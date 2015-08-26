@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class AppSettings {
-
     private static AppSettings instance = null;
 
     private static final String UNIT_STRING = "MeasureUnit";
@@ -23,7 +22,7 @@ public class AppSettings {
         return getInt(context, AppSettings.UNIT_STRING);
     }
 
-    public void setMeasureUnit(Context context,int limit){
+    public void setMeasureUnit(Context context, int limit){
         putInt(context, AppSettings.UNIT_STRING, limit);
     }
 

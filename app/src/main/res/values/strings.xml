@@ -21,6 +21,10 @@
     <string name="gpsReady">Segnale GPS Presente</string>
     <string name="aboutMenuName">Informazioni</string>
 
+    <string name="metronomeCheckBoxLabel">Metronomo</string>
+
+
+
     <string name="start">Start</string>
     <string name="stop">Stop</string>
 </resources>

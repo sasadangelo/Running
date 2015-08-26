@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.Menu;
@@ -64,7 +65,21 @@ public class Metronome extends ActionBarActivity {
 			
 		}
 	}
-	
+
+	public void onCheckboxClicked(View view) {
+		// Is the view now checked?
+		boolean checked = ((CheckBox) view).isChecked();
+
+		// Check which checkbox was clicked
+		switch(view.getId()) {
+			case R.id.metronome_on_off:
+				//if (checked)
+				// Put some meat on the sandwich
+				//else
+				// Remove the meat
+				break;
+		}
+	}
 	private void restart()
 	{
 		
