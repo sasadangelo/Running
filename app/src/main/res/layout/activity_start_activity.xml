@@ -74,4 +74,8 @@
         android:layout_centerVertical="true"
         android:text="@string/enableGPSButtonLabel"
         android:onClick="enableGPS" />
+
+
+
+
 </RelativeLayout>
