@@ -22,6 +22,8 @@
     <string name="aboutMenuName">Informazioni</string>
 
     <string name="metronomeCheckBoxLabel">Metronomo</string>
+    <string name="metronome_continue">Continuo</string>
+    <string name="metronome_intervals">Intervalli</string>
 
 
 

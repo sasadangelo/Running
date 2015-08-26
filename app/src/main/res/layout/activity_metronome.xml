@@ -5,12 +5,26 @@
 
     <TableLayout android:layout_height="wrap_content" android:paddingTop="20sp" android:paddingBottom="20sp"
         android:layout_width="fill_parent">
-        <CheckBox android:id="@+id/metronome_on_off"
+        <CheckBox android:id="@+id/checkbox_metronome"
             android:layout_width="wrap_content"
-            android:text="Prova"
+            android:text="@string/metronomeCheckBoxLabel"
             android:layout_height="wrap_content"
             android:onClick="onCheckboxClicked" />
-
+        <RadioGroup android:id="@+id/radiogroup_metronome"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RadioButton android:id="@+id/radio_metronome_continue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/metronome_continue"
+                android:onClick="onRadioButtonClicked"/>
+            <RadioButton android:id="@+id/radio_metronome_intervals"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/metronome_intervals"
+                android:onClick="onRadioButtonClicked"/>
+        </RadioGroup>
 
 
 

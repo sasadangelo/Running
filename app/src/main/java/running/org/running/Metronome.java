@@ -9,6 +9,8 @@ import android.os.PowerManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.view.Menu;
@@ -36,7 +38,93 @@ public class Metronome extends ActionBarActivity {
 	private static final String KEY_PERIOD = "METRONOME_PERIOD";
 	
 	private static final String PREFS = "metronome.prefs";
-	
+
+	private boolean metronomeEnabled = false;
+
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		//Log.v("Metronome", "onCreate");
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_metronome);
+		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MetronomeLock");
+		tp = new TickPlayer(this);
+		mStartStopButton = (Button) findViewById(R.id.startstop);
+
+		mSeekBar = (SeekBar) findViewById(R.id.tempo);
+		mSeekBar.setMax(maxTempo + 1);
+		tempoVal = (TextView) findViewById(R.id.text);
+		mMinus = (Button) findViewById(R.id.minus);
+		mPlus = (Button) findViewById(R.id.plus);
+		mPeriodLabel = (TextView) findViewById(R.id.period);
+
+		SharedPreferences settings = getSharedPreferences(PREFS, 0);
+		mPeriod = settings.getInt(KEY_PERIOD, DEFAULT_PERIOD);
+		mTempo = settings.getInt(KEY_TEMPO, DEFAULT_TEMPO);
+
+		bindPeriodButtons();
+
+		mMinus.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mTempo > 1) --mTempo;
+				restart();
+			}
+		});
+		mPlus.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (mTempo < maxTempo) ++mTempo;
+				restart();
+			}
+		});
+
+		mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+												@Override
+												public void onProgressChanged(SeekBar seekBar,
+																			  int progress, boolean fromTouch) {
+													mTempo = progress;
+													tempoVal.setText("" + mTempo);
+													// TODO Auto-generated method stub
+												}
+
+												@Override
+												public void onStopTrackingTouch(SeekBar seekBar) {
+
+													mTempo = seekBar.getProgress();
+													restart();
+													//tp.onStop();
+													//tp.onStart(4, val);
+												}
+
+												@Override
+												public void onStartTrackingTouch(SeekBar seekBar) {
+													// TODO Auto-generated method stub
+												}
+											}
+		);
+
+		mStartStopButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View view) {
+				changeState();
+			}
+		});
+		restart();
+
+		CheckBox metronomecheckBox= (CheckBox) findViewById(R.id.checkbox_metronome);
+		metronomecheckBox.setChecked(metronomeEnabled);
+
+		RadioGroup metronomeRadioGroup= (RadioGroup) findViewById(R.id.radiogroup_metronome);
+		if (metronomeEnabled) {
+			metronomeRadioGroup.setVisibility(View.VISIBLE);
+		} else {
+			metronomeRadioGroup.setVisibility(View.GONE);
+		}
+	}
+
+
+
+
 	private void bindPeriodButtons() {
 		// There must be a better way to do this
 		mPeriodButtons = new Button[numPeriods];
@@ -67,19 +155,38 @@ public class Metronome extends ActionBarActivity {
 	}
 
 	public void onCheckboxClicked(View view) {
-		// Is the view now checked?
-		boolean checked = ((CheckBox) view).isChecked();
+		metronomeEnabled = ((CheckBox) view).isChecked();
 
-		// Check which checkbox was clicked
+		RadioGroup metronomeRadioGroup = (RadioGroup) findViewById(R.id.radiogroup_metronome);
+
 		switch(view.getId()) {
-			case R.id.metronome_on_off:
-				//if (checked)
-				// Put some meat on the sandwich
-				//else
-				// Remove the meat
+			case R.id.radiogroup_metronome:
+				if (metronomeEnabled) {
+					metronomeRadioGroup.setVisibility(View.VISIBLE);
+				} else {
+					metronomeRadioGroup.setVisibility(View.GONE);
+				}
 				break;
 		}
 	}
+
+	public void onRadioButtonClicked(View view) {
+		// Is the button now checked?
+		boolean checked = ((RadioButton) view).isChecked();
+
+		// Check which radio button was clicked
+		switch(view.getId()) {
+			case R.id.radio_metronome_continue:
+				if (checked)
+					// Pirates are the best
+					break;
+			case R.id.radio_metronome_intervals:
+				if (checked)
+					// Ninjas rule
+					break;
+		}
+	}
+
 	private void restart()
 	{
 		
@@ -122,78 +229,6 @@ public class Metronome extends ActionBarActivity {
 		editor.commit();
 	}
 
-    /** Called when the activity is first created. */
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-    	//Log.v("Metronome", "onCreate");
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_metronome);
-		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MetronomeLock");
-        tp = new TickPlayer(this);
-        mStartStopButton = (Button) findViewById(R.id.startstop);
-       
-        mSeekBar = (SeekBar) findViewById(R.id.tempo);
-        mSeekBar.setMax(maxTempo + 1);
-        tempoVal = (TextView) findViewById(R.id.text);
-        mMinus = (Button) findViewById(R.id.minus);
-        mPlus = (Button) findViewById(R.id.plus);
-        mPeriodLabel = (TextView) findViewById(R.id.period);
-        
-        SharedPreferences settings = getSharedPreferences(PREFS, 0);
-        mPeriod = settings.getInt(KEY_PERIOD, DEFAULT_PERIOD);
-        mTempo = settings.getInt(KEY_TEMPO, DEFAULT_TEMPO);
-
-        bindPeriodButtons();
-        
-        mMinus.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mTempo > 1) --mTempo;
-				restart();
-			}
-        });
-        mPlus.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mTempo < maxTempo) ++mTempo;
-				restart();
-			}
-        });
-
-        mSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
-        		{
-					@Override
-					public void onProgressChanged(SeekBar seekBar,
-							int progress, boolean fromTouch) {
-						mTempo = progress;
-						tempoVal.setText("" + mTempo);
-						// TODO Auto-generated method stub
-					}
-
-					@Override
-					public void onStopTrackingTouch(SeekBar seekBar) {
-							
-							mTempo = seekBar.getProgress();
-							restart();
-							//tp.onStop();
-							//tp.onStart(4, val);
-					}
-
-					@Override
-					public void onStartTrackingTouch(SeekBar seekBar) {
-						// TODO Auto-generated method stub
-					}
-        		}
-        		);
-        
-        mStartStopButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-            		changeState();
-            }
-        });
-        restart();
-    }
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
