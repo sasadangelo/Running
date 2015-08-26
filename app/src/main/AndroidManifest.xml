@@ -5,7 +5,19 @@
     <application android:name="running.org.running.RunningApp" android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme" >
         <activity
             android:name=".Metronome"
-            android:label="@string/app_name" >
+            android:label="@string/app_name" android:theme="@style/Theme.AppCompat.Light">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MetronomeSettingsActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".Metronome">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Metronome" />
         </activity>
         <activity
             android:name=".RunningActivity"
@@ -14,10 +26,6 @@
         <activity
             android:name=".StartActivity"
             android:label="@string/app_name" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />

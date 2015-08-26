@@ -1,17 +1,19 @@
 package running.org.running;
 
-import android.app.Activity;
+import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.PowerManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.view.Menu;
+import android.view.MenuItem;
 
-public class Metronome extends Activity {
+public class Metronome extends ActionBarActivity {
 	boolean mRunning = false;
 	Button mStartStopButton;
 	SeekBar mSeekBar;
@@ -110,7 +112,7 @@ public class Metronome extends Activity {
     public void onCreate(Bundle savedInstanceState) {
     	//Log.v("Metronome", "onCreate");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_metronome);
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MetronomeLock");
         tp = new TickPlayer(this);
@@ -177,8 +179,35 @@ public class Metronome extends Activity {
         });
         restart();
     }
-    
-    private void changeState() {
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.menu_metronome, menu);
+		return true;
+	}
+
+	/**
+	 * On selecting action bar icons
+	 * */
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Take appropriate action for each action item click
+		switch (item.getItemId()) {
+			case R.id.action_metronome:
+				metronomeSettings();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+	}
+
+	private void metronomeSettings() {
+		Intent i = new Intent(Metronome.this, MetronomeSettingsActivity.class);
+		startActivity(i);
+	}
+
+	private void changeState() {
      	mRunning = !mRunning;
     	if (mRunning) {
     		mWakeLock.acquire();
