@@ -29,10 +29,6 @@
                     android:onClick="onRadioButtonClicked"/>
             </RadioGroup>
         </TableRow>
-        <TableRow>
-        </TableRow>
-        <TableRow>
-        </TableRow>
     </TableLayout>
     <TableLayout android:layout_height="wrap_content"
         android:layout_width="fill_parent">
