@@ -5,77 +5,50 @@
 
     <TableLayout android:layout_height="wrap_content" android:paddingTop="20sp" android:paddingBottom="20sp"
         android:layout_width="fill_parent">
-        <CheckBox android:id="@+id/checkbox_metronome"
-            android:layout_width="wrap_content"
-            android:text="@string/metronomeCheckBoxLabel"
-            android:layout_height="wrap_content"
-            android:onClick="onCheckboxClicked" />
-        <RadioGroup android:id="@+id/radiogroup_metronome"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RadioButton android:id="@+id/radio_metronome_continue"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/metronome_continue"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_metronome_intervals"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/metronome_intervals"
-                android:onClick="onRadioButtonClicked"/>
-        </RadioGroup>
-
-
-
-
-
         <TableRow>
-            <Button android:id="@+id/button1" android:text="1"
-                android:layout_weight="1" />
-            <Button android:id="@+id/button2" android:text="2"
-                android:layout_weight="1" />
-            <Button android:id="@+id/button3" android:text="3"
-                android:layout_weight="1" />
-            <Button android:id="@+id/button4" android:text="4"
-                android:layout_weight="1" />
+            <CheckBox android:id="@+id/checkbox_metronome"
+                android:layout_width="wrap_content"
+                android:text="@string/metronomeCheckBoxLabel"
+                android:layout_height="wrap_content"
+                android:onClick="onCheckboxClicked" />
         </TableRow>
         <TableRow>
-            <Button android:id="@+id/button5" android:text="5"
-                android:layout_weight="1" />
-            <Button android:id="@+id/button6" android:text="6"
-                android:layout_weight="1" />
-            <Button android:id="@+id/button7" android:text="7"
-                android:layout_weight="1" />
-            <Button android:id="@+id/button8" android:text="8"
-                android:layout_weight="1" />
+            <RadioGroup android:id="@+id/radiogroup_metronome"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <RadioButton android:id="@+id/radio_metronome_continue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/metronome_continue"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton android:id="@+id/radio_metronome_intervals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/metronome_intervals"
+                    android:onClick="onRadioButtonClicked"/>
+            </RadioGroup>
+        </TableRow>
+        <TableRow>
+        </TableRow>
+        <TableRow>
         </TableRow>
     </TableLayout>
     <TableLayout android:layout_height="wrap_content"
         android:layout_width="fill_parent">
-        <TableRow>
-            <Button android:id="@+id/minus" android:text="-"
-
-                android:layout_weight="2" android:textSize="50sp" />
-            <LinearLayout android:layout_weight="1" android:layout_width="fill_parent"
-                android:orientation="vertical">
-                <TextView android:layout_width="fill_parent"
-                    android:layout_height="wrap_content" android:gravity="left"
-                    android:id="@+id/period" android:text="text" />
-                <TextView android:gravity="center_horizontal" android:id="@+id/text"
-                    android:layout_height="wrap_content"
-                    android:layout_width="fill_parent" android:textSize="50sp" android:typeface="monospace" android:text="   " />
-            </LinearLayout>
-            <Button android:id="@+id/plus" android:text="+"
-
-                android:layout_weight="2" android:textSize="50sp" />
-
-        </TableRow>
     </TableLayout>
-
     <SeekBar android:layout_width="fill_parent" android:paddingTop="20sp" android:paddingBottom="20sp"
         android:layout_height="wrap_content" android:id="@+id/tempo" />
-
+    <Button android:id="@+id/minus" android:text="-" android:layout_weight="2"
+        android:textSize="50sp" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    <LinearLayout android:layout_weight="1" android:layout_width="fill_parent"
+        android:orientation="vertical" android:layout_height="fill_parent">
+        <TextView android:gravity="center_horizontal" android:id="@+id/text"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent" android:textSize="50sp" android:typeface="monospace" android:text="   " />
+    </LinearLayout>
+    <Button android:id="@+id/plus" android:text="+" android:layout_weight="2"
+        android:textSize="50sp" android:layout_width="fill_parent" android:layout_height="fill_parent" />
     <Button android:layout_width="fill_parent"
         android:layout_height="wrap_content" android:text="@string/start"
         android:layout_weight="1"
