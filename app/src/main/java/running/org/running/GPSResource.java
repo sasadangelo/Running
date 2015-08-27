@@ -11,7 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 public class GPSResource extends Resource {
-    private static final String LOG_TAG = "GPSResource";
+    private static final String LOG_TAG = "Run4Fun.GPSResource";
 
     protected static GPSResource instance = null;
 
@@ -24,7 +24,7 @@ public class GPSResource extends Resource {
     int knownSatellites = 0;
     int usedInLastFixSatellites = 0;
 
-    // If the location provided has an accurancy <= ACCURACY (10 meter) the location will be
+    // If the location provided has an accuracy <= ACCURACY (10 meter) the location will be
     // considered, otherwise it will be discarded
     private final float FIX_ACCURACY = 10;
 
@@ -53,50 +53,64 @@ public class GPSResource extends Resource {
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(final Location location) {
-                oldLocation = location;
+                Log.i(LOG_TAG, "onLocationChanged -- begin");
+                if (location.hasAccuracy()) {
+                    Log.i(LOG_TAG, "GPS location has accuracy = " + location.getAccuracy());
+                } else {
+                    Log.i(LOG_TAG, "GPS location is not accurate.");
+                }
                 if (location.hasAccuracy() && location.getAccuracy() < FIX_ACCURACY) {
+                    Log.i(LOG_TAG, "GPS fix acquired. Accuracy < 10 m");
                     gpsFixAcquired = true;
                 } else if (oldLocation != null && (location.getTime() - oldLocation.getTime()) <= (1000 * FIX_TIME)) {
+                    Log.i(LOG_TAG, "GPS fix acquired. Signal arrived in less than 3 secs.");
                     gpsFixAcquired = true;
                 } else if (knownSatellites >= FIX_SATELLITES) {
+                    Log.i(LOG_TAG, "GPS fix acquired. Signal arrived from at least two satellites.");
                     gpsFixAcquired = true;
                 }
+                oldLocation = location;
                 setState(location);
             }
 
             @Override
             public void onProviderDisabled(final String provider) {
+                Log.i(LOG_TAG, "onLocationChanged -- begin");
                 if (provider.equalsIgnoreCase("gps")) {
+                    Log.i(LOG_TAG, "User disabled GPS");
                     gpsFixAcquired = false;
                     knownSatellites = 0;
                     usedInLastFixSatellites = 0;
                     oldLocation = null;
-                    setState(null);
+                    setState();
                 }
             }
 
             @Override
             public void onProviderEnabled(final String provider) {
+                Log.i(LOG_TAG, "onProviderEnabled -- begin");
                 if (provider.equalsIgnoreCase("gps")) {
+                    Log.i(LOG_TAG, "User enabled GPS");
                     knownSatellites = 0;
                     usedInLastFixSatellites = 0;
                     oldLocation = null;
-                    setState(null);
+                    setState();
                 }
             }
 
             @Override
             public void onStatusChanged(final String provider, final int status, final Bundle extras) {
+                Log.i(LOG_TAG, "onStatusChanged -- begin");
                 if (provider.equalsIgnoreCase("gps")) {
                     if (status == LocationProvider.OUT_OF_SERVICE ||
                             status == LocationProvider.TEMPORARILY_UNAVAILABLE) {
+                        Log.i(LOG_TAG, "GPS signal lost");
                         gpsFixAcquired = false;
                         knownSatellites = 0;
                         usedInLastFixSatellites = 0;
                         oldLocation = null;
-                        setState(null);
+                        setState();
                     }
-                    setState(null);
                 }
             }
         };
@@ -104,6 +118,7 @@ public class GPSResource extends Resource {
         gpsStatusListener = new GpsStatus.Listener() {
             @Override
             public void onGpsStatusChanged(int event) {
+                Log.i(LOG_TAG, "onGpsStatusChanged -- begin");
                 if (locationManager == null)
                     return;
 
@@ -123,7 +138,9 @@ public class GPSResource extends Resource {
                 }
                 knownSatellites = cnt0;
                 usedInLastFixSatellites = cnt1;
-                setState(null);
+                Log.i(LOG_TAG, "knownSatellites: " + knownSatellites + "usedInLastFixSatellites: " +
+                        usedInLastFixSatellites);
+                setState();
             }
         };
 
@@ -135,11 +152,14 @@ public class GPSResource extends Resource {
 
     public boolean isGPSEnabled() {
         Log.i(LOG_TAG, "isGPSEnabled -- begin");
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        boolean gpsEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        Log.i(LOG_TAG, "isGPSEnabled: " + gpsEnabled);
+        return gpsEnabled;
     }
 
     public boolean isGpsFixAcquired() {
         Log.i(LOG_TAG, "isGpsFixAcquired -- begin");
+        Log.i(LOG_TAG, "isGpsFixAcquired: " + gpsFixAcquired);
         return gpsFixAcquired;
     }
 
