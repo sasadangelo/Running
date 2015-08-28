@@ -140,7 +140,7 @@ public class Metronome extends ActionBarActivity {
             "3 minutes", "5 minutes", "8 minutes", "10 minutes", "20 minutes", "22 minutes",
             "25 minutes", "28 minutes", "30 minutes" };
 
-        metronomeTimeI1Spinner= (Spinner) findViewById(R.id.spinner_metronome);
+        metronomeTimeI1Spinner= (Spinner) findViewById(R.id.spinner_time_metronome_i1);
         ArrayAdapter<String> adapterTempoI1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, time);
 
         adapterTempoI1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -159,7 +159,7 @@ public class Metronome extends ActionBarActivity {
 
         });
 
-        metronomeTimeI2Spinner= (Spinner) findViewById(R.id.spinner_metronome);
+        metronomeTimeI2Spinner= (Spinner) findViewById(R.id.spinner_time_metronome_i2);
         ArrayAdapter<String> adapterTempoI2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, time);
 
         adapterTempoI2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
