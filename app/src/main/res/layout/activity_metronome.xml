@@ -7,12 +7,11 @@
         android:layout_width="fill_parent">
         <TableRow android:paddingBottom="20sp">
             <CheckBox android:id="@+id/checkbox_metronome"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:text="@string/metronomeCheckBoxLabel"
-                android:layout_height="wrap_content"
                 android:onClick="onCheckboxClicked" />
         </TableRow>
-        <TableRow>
+        <TableRow android:paddingTop="20sp">
             <RadioGroup android:id="@+id/radiogroup_metronome"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -29,7 +28,32 @@
                     android:onClick="onRadioButtonClicked"/>
             </RadioGroup>
         </TableRow>
+        <TableRow android:paddingTop="20sp">
+            <Spinner
+                android:id="@+id/spinner_spm_metronome_i1"
+                android:layout_width="fill_parent"
+                android:title="Steps/min"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spinner_time_metronome_i1"
+                android:layout_width="fill_parent"
+                android:title="Time"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow android:paddingTop="20sp">
+            <Spinner
+                android:id="@+id/spinner_spm_metronome_i2"
+                android:layout_width="fill_parent"
+                android:title="Steps/min"
+                android:layout_height="wrap_content" />
+            <Spinner
+                android:id="@+id/spinner_time_metronome_i2"
+                android:layout_width="fill_parent"
+                android:title="Time"
+                android:layout_height="wrap_content" />
+        </TableRow>
     </TableLayout>
+    <!--
     <TableLayout android:layout_height="wrap_content"
         android:layout_width="fill_parent">
     </TableLayout>
@@ -53,4 +77,5 @@
         android:layout_weight="1"
         android:textSize="25sp"
         android:id="@+id/startstop" />
+    -->
 </LinearLayout>
