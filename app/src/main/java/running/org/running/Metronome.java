@@ -19,13 +19,14 @@ import android.view.MenuItem;
 
 public class Metronome extends ActionBarActivity {
 	private static final int MAX_TEMPO = 220;
-	private static final int DEFAULT_TEMPO = 180;
+	private static final int DEFAULT_TEMPO = 160;
 
     private CheckBox metronomeCheckBox;
     private Spinner metronomeSPMI1Spinner;
     private Spinner metronomeSPMI2Spinner;
     private Spinner metronomeTimeI1Spinner;
     private Spinner metronomeTimeI2Spinner;
+	private Spinner metronomeRepeatSpinner;
 
 	private int metronomeTempo = DEFAULT_TEMPO;
 
@@ -44,7 +45,7 @@ public class Metronome extends ActionBarActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_metronome);
+		setContentView(R.layout.activity_actionbar);
 
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
 		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MetronomeLock");
@@ -77,7 +78,7 @@ public class Metronome extends ActionBarActivity {
 
         adapterSPMI2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         metronomeSPMI2Spinner.setAdapter(adapterSPMI2);
-        metronomeSPMI2Spinner.setSelection(DEFAULT_TEMPO);
+        metronomeSPMI2Spinner.setSelection(0);
         metronomeSPMI2Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -100,7 +101,7 @@ public class Metronome extends ActionBarActivity {
 
         adapterTimeI1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         metronomeTimeI1Spinner.setAdapter(adapterTimeI1);
-        metronomeTimeI1Spinner.setSelection(5);
+        metronomeTimeI1Spinner.setSelection(4);
         metronomeTimeI1Spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
@@ -133,6 +134,31 @@ public class Metronome extends ActionBarActivity {
 
         });
 
+		String repeats[] = { "1 time", "2 times", "3 times", "4 times", "5 times",
+				"6 time", "7 times", "8 times", "9 times", "10 times",
+				"11 time", "12 times", "13 times", "14 times", "15 times",
+				"16 time", "17 times", "18 times", "19 times", "20 times",
+				"Until I stop" };
+
+		metronomeRepeatSpinner= (Spinner) findViewById(R.id.spinner_repeat_metronome);
+		ArrayAdapter<String> adapterRepeat = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, repeats);
+
+		adapterTimeI2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		metronomeRepeatSpinner.setAdapter(adapterRepeat);
+		metronomeRepeatSpinner.setSelection(0);
+		metronomeRepeatSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+				// your code here
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> parentView) {
+				// your code here
+			}
+
+		});
+
         metronomeCheckBox= (CheckBox) findViewById(R.id.checkbox_metronome);
 		metronomeCheckBox.setChecked(metronomeActive);
 
@@ -154,12 +180,14 @@ public class Metronome extends ActionBarActivity {
             metronomeSPMI2Spinner.setVisibility(View.GONE);
             metronomeTimeI1Spinner.setVisibility(View.GONE);
             metronomeTimeI2Spinner.setVisibility(View.GONE);
+			metronomeRepeatSpinner.setVisibility(View.GONE);
 		} else {
 			metronomeRadioContinue.setChecked(false);
 			metronomeRadioIntervals.setChecked(true);
             metronomeSPMI2Spinner.setVisibility(View.VISIBLE);
             metronomeTimeI1Spinner.setVisibility(View.VISIBLE);
             metronomeTimeI2Spinner.setVisibility(View.VISIBLE);
+			metronomeRepeatSpinner.setVisibility(View.VISIBLE);
 		}
 
 		SharedPreferences settings = getSharedPreferences(PREFS, 0);
@@ -181,6 +209,7 @@ public class Metronome extends ActionBarActivity {
                     metronomeSPMI2Spinner.setVisibility(View.VISIBLE);
                     metronomeTimeI1Spinner.setVisibility(View.VISIBLE);
                     metronomeTimeI2Spinner.setVisibility(View.VISIBLE);
+					metronomeRepeatSpinner.setVisibility(View.VISIBLE);
                 }
 			} else {
 				metronomeRadioGroup.setVisibility(View.GONE);
@@ -188,6 +217,7 @@ public class Metronome extends ActionBarActivity {
                 metronomeSPMI2Spinner.setVisibility(View.GONE);
                 metronomeTimeI1Spinner.setVisibility(View.GONE);
                 metronomeTimeI2Spinner.setVisibility(View.GONE);
+				metronomeRepeatSpinner.setVisibility(View.GONE);
 			}
 			break;
 		}
@@ -207,6 +237,7 @@ public class Metronome extends ActionBarActivity {
                 metronomeSPMI2Spinner.setVisibility(View.GONE);
                 metronomeTimeI1Spinner.setVisibility(View.GONE);
                 metronomeTimeI2Spinner.setVisibility(View.GONE);
+				metronomeRepeatSpinner.setVisibility(View.GONE);
 			}
 			break;
 		case R.id.radio_metronome_intervals:
@@ -219,6 +250,7 @@ public class Metronome extends ActionBarActivity {
                 metronomeSPMI2Spinner.setVisibility(View.VISIBLE);
                 metronomeTimeI1Spinner.setVisibility(View.VISIBLE);
                 metronomeTimeI2Spinner.setVisibility(View.VISIBLE);
+				metronomeRepeatSpinner.setVisibility(View.VISIBLE);
 			}
 			break;
 		}
@@ -258,7 +290,7 @@ public class Metronome extends ActionBarActivity {
 	}
 
 	private void metronomeSettings() {
-		Intent i = new Intent(Metronome.this, MetronomeSettingsActivity.class);
+		Intent i = new Intent(Metronome.this, SettingsActivity.class);
 		startActivity(i);
 	}
 

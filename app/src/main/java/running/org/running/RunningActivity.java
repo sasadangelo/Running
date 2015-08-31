@@ -62,9 +62,9 @@ public class RunningActivity extends Activity implements Observer {
         averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
         distanceValue = (TextView) findViewById(R.id.distanceValue);
 
-        String unitString = measurementUnitString(AppSettings.getInstance().getMeasureUnit(this));
-        String speedPeaceString = speedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
-        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
+        String unitString = measurementUnitString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
+        String speedPeaceString = speedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
+        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
 
         timerValue.setText(getString(R.string.time) + ": " + "00:00");
         speedValue.setText(speedPeaceString + ": " + "00:00 " + unitString);
@@ -187,10 +187,10 @@ public class RunningActivity extends Activity implements Observer {
         String speedString = "" + roundDecimal(convertSpeed(speed),2);
         String averageSpeedString = "" + roundDecimal(convertSpeed(averageSpeed),2);
         String totalDistanceString = "" + roundDecimal(totalDistance,2);
-        String unitString = measurementUnitString(AppSettings.getInstance().getMeasureUnit(this));
+        String unitString = measurementUnitString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
 
-        String speedPeaceString = speedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
-        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getMeasureUnit(this));
+        String speedPeaceString = speedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
+        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
 
         speedValue.setText(speedPeaceString + ": " + speedString + " " + unitString);
         averageSpeedValue.setText(averageSpeedPeaceString + ": " + averageSpeedString + " " + unitString);
@@ -214,10 +214,10 @@ public class RunningActivity extends Activity implements Observer {
 
     private double convertSpeed(double speed) {
         Log.i(LOG_TAG, "convertSpeed -- begin");
-        switch(AppSettings.getInstance().getMeasureUnit(this)) {
-            case Constants.INDEX_KMH:
+        switch(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING)) {
+            case Constants.SPEED_SETTING_KMH:
                 return speed;
-            case Constants.INDEX_MIN_KM:
+            case Constants.SPEED_SETTING_MIN_KM:
                 return speed==0 ? 0 : 60/speed;
         }
         return speed;
@@ -228,10 +228,10 @@ public class RunningActivity extends Activity implements Observer {
         String string = getString(R.string.unit_kmh);
 
         switch(unitIndex) {
-            case Constants.INDEX_KMH:
+            case Constants.SPEED_SETTING_KMH:
                 string = getString(R.string.unit_kmh);
                 break;
-            case Constants.INDEX_MIN_KM:
+            case Constants.SPEED_SETTING_MIN_KM:
                 string = getString(R.string.unit_minKm);
                 break;
         }
@@ -244,10 +244,10 @@ public class RunningActivity extends Activity implements Observer {
         String string = getString(R.string.speed);
 
         switch(unitIndex) {
-            case Constants.INDEX_KMH:
+            case Constants.SPEED_SETTING_KMH:
                 string = getString(R.string.speed);
                 break;
-            case Constants.INDEX_MIN_KM:
+            case Constants.SPEED_SETTING_MIN_KM:
                 string = getString(R.string.peace);
                 break;
         }
@@ -260,10 +260,10 @@ public class RunningActivity extends Activity implements Observer {
         String string = getString(R.string.averageSpeed);
 
         switch(unitIndex) {
-            case Constants.INDEX_KMH:
+            case Constants.SPEED_SETTING_KMH:
                 string = getString(R.string.averageSpeed);
                 break;
-            case Constants.INDEX_MIN_KM:
+            case Constants.SPEED_SETTING_MIN_KM:
                 string = getString(R.string.averagePeace);
                 break;
         }

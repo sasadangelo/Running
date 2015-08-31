@@ -5,13 +5,17 @@
 
     <TableLayout android:layout_height="wrap_content" android:paddingTop="20sp" android:paddingBottom="20sp"
         android:layout_width="fill_parent">
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"/>
         <TableRow android:paddingBottom="20sp">
             <CheckBox android:id="@+id/checkbox_metronome"
                 android:layout_width="fill_parent"
                 android:text="@string/metronomeCheckBoxLabel"
                 android:onClick="onCheckboxClicked" />
         </TableRow>
-        <TableRow android:paddingTop="20sp">
+        <TableRow>
             <RadioGroup android:id="@+id/radiogroup_metronome"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -50,6 +54,13 @@
                 android:id="@+id/spinner_time_metronome_i2"
                 android:layout_width="fill_parent"
                 android:title="Time"
+                android:layout_height="wrap_content" />
+        </TableRow>
+        <TableRow android:paddingTop="20sp">
+            <Spinner
+                android:id="@+id/spinner_repeat_metronome"
+                android:layout_width="fill_parent"
+                android:title="Steps/min"
                 android:layout_height="wrap_content" />
         </TableRow>
     </TableLayout>
