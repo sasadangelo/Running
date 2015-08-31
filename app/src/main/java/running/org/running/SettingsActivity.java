@@ -15,7 +15,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 	public static final String KEY_METRONOME_SETTINGS = "metronomeSettings";
 	public static final String KEY_MODE_METRONOME_SETTINGS = "modeMetronomeSettings";
 
-	private PreferenceCategory generalCategorySettings;
 	private ListPreference listSpeedSettings;
 
 	private PreferenceCategory metronomeCategorySettings;
