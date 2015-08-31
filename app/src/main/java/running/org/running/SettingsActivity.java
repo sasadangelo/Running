@@ -6,33 +6,43 @@ import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceCategory;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 	public static final String KEY_SPEED_SETTINGS = "listSpeedSettings";
 
+	public static final String KEY_METRONOME_CATEGORY_SETTINGS = "generalCategorySettings";
 	public static final String KEY_METRONOME_SETTINGS = "metronomeSettings";
 	public static final String KEY_MODE_METRONOME_SETTINGS = "modeMetronomeSettings";
 
+	private PreferenceCategory generalCategorySettings;
 	private ListPreference listSpeedSettings;
 
-	private CheckBoxPreference  metronomeSettings;
+	private PreferenceCategory metronomeCategorySettings;
+	private CheckBoxPreference metronomeSettings;
 	private ListPreference modeMetronomeSettings;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.settings);
+		metronomeCategorySettings = (PreferenceCategory) findPreference(KEY_METRONOME_CATEGORY_SETTINGS);
+
 		listSpeedSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_SPEED_SETTINGS);
 		metronomeSettings = (CheckBoxPreference)getPreferenceScreen().findPreference(KEY_METRONOME_SETTINGS);
+		metronomeSettings.setChecked(false);
+		modeMetronomeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_MODE_METRONOME_SETTINGS);
 		metronomeSettings.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
 				if (newValue.toString().equals("true")) {
+					metronomeCategorySettings.addPreference(modeMetronomeSettings);
 				} else {
+					metronomeCategorySettings.removePreference(modeMetronomeSettings);
 				}
 				return true;
 			}
 		});
-		modeMetronomeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_MODE_METRONOME_SETTINGS);
+		metronomeCategorySettings.removePreference(modeMetronomeSettings);
 	}
 
 	@Override
