@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+    <PreferenceCategory android:title="Generali" >
+        <ListPreference
+            android:title="Unità di velocità"
+            android:key="listSpeedSettings"
+            android:defaultValue="0"
+            android:entries="@array/listSpeedSetting"
+            android:entryValues="@array/listSpeedValues" />
+    </PreferenceCategory>
+     
+    <PreferenceCategory android:title="Metronomo" >
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="metronomeSettings"
+            android:summary=""
+            android:title="Metronomo" >
+        </CheckBoxPreference>
+        <ListPreference
+            android:title="Modalità"
+            android:key="modeMetronomeSettings"
+            android:defaultValue="0"
+            android:entries="@array/modeMetronomeSetting"
+            android:entryValues="@array/modeMetronomeValues" />
+    </PreferenceCategory>
+</PreferenceScreen>

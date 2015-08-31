@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="listSpeedSetting">
+        <item>Km/h</item>
+        <item>Min. per Km</item>
+    </string-array>
+    <string-array name="listSpeedValues">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+    <string-array name="modeMetronomeSetting">
+        <item>Continuo</item>
+        <item>Intervalli</item>
+    </string-array>
+    <string-array name="modeMetronomeValues">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+</resources>
