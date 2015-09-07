@@ -67,9 +67,11 @@
 
     <PreferenceCategory android:title="Informazioni" android:key="infoCategorySettings">
         <EditTextPreference
-            android:title="Informazioni su Running"
+            android:title="Informazioni"
             android:key="infoSettings"
-            android:summary=""
+            android:summary="Running 0.0.4"
+            android:enabled="false"
+            android:selectable="false"
             android:dialogTitle="Informazioni su Running" />
     </PreferenceCategory>
 </PreferenceScreen>
