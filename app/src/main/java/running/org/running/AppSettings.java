@@ -13,6 +13,11 @@ public class AppSettings {
 
     public static final String METRONOME_SETTING = "MetronomeSetting";
     public static final String MODE_METRONOME_SETTING = "ModeMetronomeSetting";
+    public static final String STEPS_BY_MINUTE_SETTING = "StepsByMinuteSetting";
+    public static final String STEPS_BY_MINUTE_TIME_SETTING = "StepsByMinuteTimeSetting";
+    public static final String STEPS_BY_MINUTE_2ND_INTERVAL_SETTING = "StepsByMinuteSecondIntervalSetting";
+    public static final String STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING = "StepsByMinuteSecondIntervalTimeSetting";
+    public static final String REPEAT_METRONOME_SETTING = "RepeatMetronomeSetting";
 
     public static AppSettings getInstance(){
         if (instance == null)

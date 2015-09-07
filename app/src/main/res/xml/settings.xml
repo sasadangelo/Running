@@ -3,6 +3,7 @@
     <PreferenceCategory android:title="Generali" android:key="generailCategorySettings" >
         <ListPreference
             android:title="Unità di velocità"
+            android:dialogTitle="Unità di velocità"
             android:key="listSpeedSettings"
             android:defaultValue="0"
             android:entries="@array/listSpeedSetting"
@@ -11,16 +12,64 @@
      
     <PreferenceCategory android:title="Metronomo" android:key="metronomeCategorySettings">
         <CheckBoxPreference
+            android:title="Metronomo"
             android:defaultValue="false"
             android:key="metronomeSettings"
-            android:summary=""
-            android:title="Metronomo" >
-        </CheckBoxPreference>
+            android:summary="" />
         <ListPreference
             android:title="Modalità"
             android:key="modeMetronomeSettings"
             android:defaultValue="0"
             android:entries="@array/modeMetronomeSetting"
-            android:entryValues="@array/modeMetronomeValues" />
+            android:entryValues="@array/modeMetronomeValues"
+            android:dialogTitle="Modalità" />
+        <ListPreference
+            android:title="Passi al minuto"
+            android:dialogTitle="Passi al minuto"
+            android:key="stepsByMinuteSettings"
+            android:summary="160"
+            android:defaultValue="160"
+            android:entries="@array/stepsByMinuteSetting"
+            android:entryValues="@array/stepsByMinuteValues" />
+        <ListPreference
+            android:title="Tempo"
+            android:dialogTitle="Tempo"
+            android:key="stepsByMinuteTimeSettings"
+            android:summary="120"
+            android:defaultValue="120"
+            android:entries="@array/stepsByMinuteTimeSetting"
+            android:entryValues="@array/stepsByMinuteTimeValues" />
+        <ListPreference
+            android:title="Passi al minuto (2° Intervallo)"
+            android:dialogTitle="Passi al minuto (2° Intervallo)"
+            android:key="stepsByMinuteSecondIntervalSettings"
+            android:summary="Silent"
+            android:defaultValue="0"
+            android:entries="@array/stepsByMinuteSecondIntervalSetting"
+            android:entryValues="@array/stepsByMinuteSecondIntervalValues" />
+        <ListPreference
+            android:title="Tempo (2° Intervallo)"
+            android:dialogTitle="Tempo (2° Intervallo)"
+            android:key="stepsByMinuteSecondIntervalTimeSettings"
+            android:summary="120"
+            android:defaultValue="120"
+            android:entries="@array/stepsByMinuteSecondIntervalTimeSetting"
+            android:entryValues="@array/stepsByMinuteSecondIntervalTimeValues" />
+        <ListPreference
+            android:title="Ripeti"
+            android:dialogTitle="Ripeti"
+            android:key="repeatMetronomeSettings"
+            android:summary="Finché non lo fermo"
+            android:defaultValue="0"
+            android:entries="@array/repeatMetronomeSetting"
+            android:entryValues="@array/repeatMetronomeValues" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Informazioni" android:key="infoCategorySettings">
+        <EditTextPreference
+            android:title="Informazioni su Running"
+            android:key="infoSettings"
+            android:summary=""
+            android:dialogTitle="Informazioni su Running" />
     </PreferenceCategory>
 </PreferenceScreen>
