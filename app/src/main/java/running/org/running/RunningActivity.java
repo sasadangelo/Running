@@ -50,6 +50,8 @@ public class RunningActivity extends Activity implements Observer {
     private TextView averageSpeedValue;
     private TextView distanceValue;
 
+    private TickPlayer tp;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.i(LOG_TAG, "onCreate -- begin");
@@ -112,6 +114,15 @@ public class RunningActivity extends Activity implements Observer {
 
         gpsResource = GPSResource.getInstance();
         gpsResource.attach(this);
+
+        restart();
+    }
+
+    private void restart() {
+        //if (metronomeRunning) {
+        //    tp.onStop();
+        //    tp.onStart(metronomeTempo);
+        //}
     }
 
     @Override
