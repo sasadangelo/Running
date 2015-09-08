@@ -6,6 +6,7 @@ import java.math.RoundingMode;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.PowerManager;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -51,6 +52,8 @@ public class RunningActivity extends Activity implements Observer {
     private TextView distanceValue;
 
     private TickPlayer tp;
+    private PowerManager.WakeLock mWakeLock;
+    boolean metronomeRunning = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -119,10 +122,10 @@ public class RunningActivity extends Activity implements Observer {
     }
 
     private void restart() {
-        //if (metronomeRunning) {
-        //    tp.onStop();
-        //    tp.onStart(metronomeTempo);
-        //}
+        if (metronomeRunning) {
+            tp.onStop();
+            tp.onStart(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
+        }
     }
 
     @Override
@@ -130,6 +133,9 @@ public class RunningActivity extends Activity implements Observer {
         Log.i(LOG_TAG, "onDestroy -- begin");
         gpsResource.destroy();
         gpsResource = null;
+        if (metronomeRunning) {
+            changeState();
+        }
         super.onDestroy();
     }
 
@@ -294,4 +300,16 @@ public class RunningActivity extends Activity implements Observer {
 
         tv.setText(span);
     }
+
+    private void changeState() {
+        metronomeRunning = !metronomeRunning;
+        if (metronomeRunning) {
+            mWakeLock.acquire();
+            tp.onStart(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
+        } else {
+            mWakeLock.release();
+            tp.onStop();
+        }
+    }
+
 }
