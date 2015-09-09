@@ -53,7 +53,6 @@ public class RunningActivity extends Activity implements Observer {
 
     private TickPlayer tp;
     private PowerManager.WakeLock mWakeLock;
-    boolean metronomeRunning = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -98,6 +97,9 @@ public class RunningActivity extends Activity implements Observer {
                 customHandler.removeCallbacks(updateTimerThread);
                 pauseButton.setVisibility(View.GONE);
                 resumeButton.setVisibility(View.VISIBLE);
+                if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
+                    tp.onStop();
+                }
             }
         });
 
@@ -107,6 +109,9 @@ public class RunningActivity extends Activity implements Observer {
                 customHandler.postDelayed(updateTimerThread, 0);
                 resumeButton.setVisibility(View.GONE);
                 pauseButton.setVisibility(View.VISIBLE);
+                if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
+                    tp.onStart(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
+                }
             }
         });
 
@@ -118,12 +123,8 @@ public class RunningActivity extends Activity implements Observer {
         gpsResource = GPSResource.getInstance();
         gpsResource.attach(this);
 
-        restart();
-    }
-
-    private void restart() {
-        if (metronomeRunning) {
-            tp.onStop();
+        tp = new TickPlayer(this);
+        if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
             tp.onStart(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
         }
     }
@@ -133,8 +134,8 @@ public class RunningActivity extends Activity implements Observer {
         Log.i(LOG_TAG, "onDestroy -- begin");
         gpsResource.destroy();
         gpsResource = null;
-        if (metronomeRunning) {
-            changeState();
+        if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
+            tp.onStop();
         }
         super.onDestroy();
     }
@@ -300,16 +301,4 @@ public class RunningActivity extends Activity implements Observer {
 
         tv.setText(span);
     }
-
-    private void changeState() {
-        metronomeRunning = !metronomeRunning;
-        if (metronomeRunning) {
-            mWakeLock.acquire();
-            tp.onStart(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
-        } else {
-            mWakeLock.release();
-            tp.onStop();
-        }
-    }
-
 }

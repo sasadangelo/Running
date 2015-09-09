@@ -57,7 +57,6 @@ public final class MediaPlayerPool {
 		for (int i = 0; i <= mLast; i++) {
 			if (!mp[i].isPlaying()) {
 				mLast = i;
-				//Log.i("metronome", "starting2 i=" + i);
 				mp[i].start();
 				return;
 			}
@@ -72,10 +71,8 @@ public final class MediaPlayerPool {
 	}
 	
 	public void onDestroy() {
+		stop();
 		for (int i = 0; i < mp.length; i++) {
-			if (mp[i].isPlaying()) {
-				mp[i].stop();
-			}
 			mp[i].release();
 			mp[i] = null;
 		}
