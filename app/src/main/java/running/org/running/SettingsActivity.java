@@ -3,14 +3,10 @@ package running.org.running;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceCategory;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 public class SettingsActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -93,73 +89,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 			}
 		});
 
-		//stepsByMinuteSettings.setOnPreferenceChangeListener(new Preference.OnPreferenceClickListener() {
-		//	stepsByMinuteSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-			//@Override
-			//public boolean onPreferenceChange(Preference preference, Object newValue) {
-			//public boolean onPreferenceClick(Preference preference) {
-			//stepsByMinuteSettings.getDialog().dismiss();
-
-		//		String bpm[]=new String[MAX_TEMPO+1];
-		//		for (int i=0; i<MAX_TEMPO+1; i++) bpm[i]= "" + i;
-		//		bpm[0]="Silent";
-
-			//stepsPerMinuteSpinner= (Spinner) findViewById(R.id.spinner_spm_metronome_i1);
-			//ArrayAdapter<String> adapterSPMI1 = new ArrayAdapter<String>(SettingsActivity.this, android.R.layout.simple_spinner_item, bpm);
-			//adapterSPMI1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-			//stepsPerMinuteSpinner.setAdapter(adapterSPMI1);
-			//stepsPerMinuteSpinner.setSelection(DEFAULT_TEMPO);
-			//stepsPerMinuteSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-			//	@Override
-			//	public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-			// your code here
-			//	}
-
-			//	@Override
-			//	public void onNothingSelected(AdapterView<?> parentView) {
-			// your code here
-			//	}
-		//		return true;
-		//	}
-			//return true;
-		//});
-
-		//stepsByMinuteTimeSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-		//	@Override
-		//	public boolean onPreferenceClick(Preference preference) {
-		//		stepsByMinuteTimeSettings.getDialog().dismiss();
-				//launch spinner/numberpicker/activity/dialog here
-		//		return true;
-		//	}
-		//});
-
-		//stepsByMinuteSecondIntervalSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-		//	@Override
-		//	public boolean onPreferenceClick(Preference preference) {
-		//		stepsByMinuteSettings.getDialog().dismiss();
-		//		//launch spinner/numberpicker/activity/dialog here
-		//		return true;
-		//	}
-		//});
-
-		//stepsByMinuteSecondIntervalTimeSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-		//	@Override
-		//	public boolean onPreferenceClick(Preference preference) {
-		//		stepsByMinuteTimeSettings.getDialog().dismiss();
-		//		//launch spinner/numberpicker/activity/dialog here
-		//		return true;
-		//	}
-		//});
-
-		//repeatMetronomeSettings.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-		//	@Override
-		//	public boolean onPreferenceClick(Preference preference) {
-		//		repeatMetronomeSettings.getDialog().dismiss();
-				//launch spinner/numberpicker/activity/dialog here
-		//		return true;
-		//	}
-		//});
-
 		if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_OFF) {
 			metronomeSettings.setChecked(false);
 			metronomeCategorySettings.removePreference(modeMetronomeSettings);
@@ -201,20 +130,11 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 		stepsByMinuteSettings.setSummary(stepsByMinuteSettings.getEntry().toString());
 		stepsByMinuteTimeSettings.setSummary(stepsByMinuteTimeSettings.getEntry().toString());
 		stepsByMinuteSecondIntervalSettings.setSummary(stepsByMinuteSecondIntervalSettings.getEntry().toString());
-		//stepsByMinuteSecondIntervalTimeSettings.setSummary(stepsByMinuteSecondIntervalTimeSettings.getEntry().toString());
 		stepsByMinuteSecondIntervalTimeSettings.setSummary(stepsByMinuteSecondIntervalTimeSettings.getEntry());
 		repeatMetronomeSettings.setSummary(repeatMetronomeSettings.getEntry());
 
 		// Set up a listener whenever a key changes
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-		//AppSettings.getInstance().putInt(AppSettings.SPEED_PEACE_SETTING, Constants.SPEED_SETTING_KMH);
-		//AppSettings.getInstance().putInt(AppSettings.METRONOME_SETTING, Constants.METRONOME_SETTING_OFF);
-		//AppSettings.getInstance().putInt(AppSettings.MODE_METRONOME_SETTING, Constants.MODE_METRONOME_SETTING_CONTINUE);
-		//AppSettings.getInstance().putInt(AppSettings.STEPS_BY_MINUTE_SETTING, Constants.STEPS_BY_MINUTE_SETTING);
-		//AppSettings.getInstance().putInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING, Constants.STEPS_BY_MINUTE_TIME_SETTING);
-		//AppSettings.getInstance().putInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_SETTING, Constants.STEPS_BY_MINUTE_2ND_INTERVAL_SETTING);
-		//AppSettings.getInstance().putInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING, Constants.STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING);
-		//AppSettings.getInstance().putInt(AppSettings.REPEAT_METRONOME_SETTING, Constants.REPEAT_METRONOME_SETTING);
 	}
 
 	@Override

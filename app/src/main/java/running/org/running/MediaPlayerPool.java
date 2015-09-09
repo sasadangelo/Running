@@ -24,7 +24,6 @@ import android.media.MediaPlayer;
 import android.util.Log;
 
 public final class MediaPlayerPool {
-	
 	private MediaPlayer mp[];
 	int mLast;
 	
@@ -44,14 +43,11 @@ public final class MediaPlayerPool {
 			});
 		}
 		mLast = -1;
-		
 	}
 	
 	public void start() {
-		
 		for (int i = mLast + 1; i < mp.length; i++) {
 			if (!mp[i].isPlaying()) {
-				
 				mLast = i;
 				//Log.i("metronome", "starting1 i=" + i);
 				mp[i].start();
@@ -62,12 +58,10 @@ public final class MediaPlayerPool {
 			if (!mp[i].isPlaying()) {
 				mLast = i;
 				//Log.i("metronome", "starting2 i=" + i);
-				
 				mp[i].start();
 				return;
 			}
 		}
-		
 	}
 	
 	public void stop() {
@@ -86,5 +80,4 @@ public final class MediaPlayerPool {
 			mp[i] = null;
 		}
 	}
-
 }

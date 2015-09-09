@@ -8,9 +8,6 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -108,19 +105,16 @@ public class StartActivity extends ActionBarActivity implements Observer {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Log.i(LOG_TAG, "onCreateOptionsMenu -- begin");
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.menu_start_activity, menu);
+    //@Override
+    //public boolean onCreateOptionsMenu(Menu menu) {
+        //Log.i(LOG_TAG, "onCreateOptionsMenu -- begin");
+        //getMenuInflater().inflate(R.menu.menu_metronome, menu);
         //return true;
-        getMenuInflater().inflate(R.menu.menu_metronome, menu);
-        return true;
-    }
+    //}
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.i(LOG_TAG, "onOptionsItemSelected -- begin");
+    //@Override
+    //public boolean onOptionsItemSelected(MenuItem item) {
+        //Log.i(LOG_TAG, "onOptionsItemSelected -- begin");
         //boolean result = true;
 
         //switch(item.getItemId()) {
@@ -142,15 +136,15 @@ public class StartActivity extends ActionBarActivity implements Observer {
         //    }
         //}
         //return result;
-        switch (item.getItemId()) {
-            case R.id.action_metronome:
-                Intent i = new Intent(this, SettingsActivity.class);
-                startActivity(i);
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+        //switch (item.getItemId()) {
+        //    case R.id.action_metronome:
+        //        Intent i = new Intent(this, SettingsActivity.class);
+        //        startActivity(i);
+        //        return true;
+        //    default:
+        //        return super.onOptionsItemSelected(item);
+        //}
+    //}
 
     /** Called when the user clicks the Start button */
     public void startRunning(View view) {
@@ -204,23 +198,23 @@ public class StartActivity extends ActionBarActivity implements Observer {
         }
     }
 
-    private void displayAboutDialog() {
-        Log.i(LOG_TAG, "displayAboutDialog -- begin");
-        final LayoutInflater inflator = LayoutInflater.from(this);
-        final View settingsview = inflator.inflate(R.layout.activity_about, null);
-        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+    //private void displayAboutDialog() {
+    //    Log.i(LOG_TAG, "displayAboutDialog -- begin");
+    //    final LayoutInflater inflator = LayoutInflater.from(this);
+    //    final View settingsview = inflator.inflate(R.layout.activity_about, null);
+    //    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-        builder.setTitle(getString(R.string.app_name));
-        builder.setView(settingsview);
+    //    builder.setTitle(getString(R.string.app_name));
+    //    builder.setView(settingsview);
 
-        builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
+    //    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+    //        @Override
+    //        public void onClick(DialogInterface dialog, int which) {
+    //        }
+    //    });
 
-        builder.create().show();
-    }
+    //    builder.create().show();
+    //}
 
     private void setSpeedText(int textid, String text) {
         Log.i(LOG_TAG, "setSpeedText -- begin");
