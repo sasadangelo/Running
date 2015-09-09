@@ -199,6 +199,7 @@ public class RunningActivity extends Activity implements Observer {
             speed = timeDiff==0 ? 0 : distanceDiff*3600000/timeDiff;
             averageSpeed = totalTime==0 ? 0 : totalDistance*3600000/totalTime;
         }
+
         oldLocation = location;
 
         String speedString = "" + roundDecimal(convertSpeed(speed),2);
