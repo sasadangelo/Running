@@ -8,6 +8,8 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -105,17 +107,17 @@ public class StartActivity extends ActionBarActivity implements Observer {
         }
     }
 
-    //@Override
-    //public boolean onCreateOptionsMenu(Menu menu) {
-        //Log.i(LOG_TAG, "onCreateOptionsMenu -- begin");
-        //getMenuInflater().inflate(R.menu.menu_metronome, menu);
-        //return true;
-    //}
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        Log.i(LOG_TAG, "onCreateOptionsMenu -- begin");
+        getMenuInflater().inflate(R.menu.menu_metronome, menu);
+        return true;
+    }
 
     //@Override
-    //public boolean onOptionsItemSelected(MenuItem item) {
-        //Log.i(LOG_TAG, "onOptionsItemSelected -- begin");
-        //boolean result = true;
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i(LOG_TAG, "onOptionsItemSelected -- begin");
+        boolean result = true;
 
         //switch(item.getItemId()) {
         //    case R.id.menu_about: {
@@ -136,15 +138,15 @@ public class StartActivity extends ActionBarActivity implements Observer {
         //    }
         //}
         //return result;
-        //switch (item.getItemId()) {
-        //    case R.id.action_metronome:
-        //        Intent i = new Intent(this, SettingsActivity.class);
-        //        startActivity(i);
-        //        return true;
-        //    default:
-        //        return super.onOptionsItemSelected(item);
-        //}
-    //}
+        switch (item.getItemId()) {
+            case R.id.action_metronome:
+                Intent i = new Intent(this, SettingsActivity.class);
+                startActivity(i);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     /** Called when the user clicks the Start button */
     public void startRunning(View view) {
