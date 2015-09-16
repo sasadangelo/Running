@@ -35,7 +35,7 @@ public class Metronome extends ActionBarActivity {
 
 	Button mStartStopButton;
 	TickPlayer tp;
-	PowerManager.WakeLock mWakeLock;
+	//PowerManager.WakeLock mWakeLock;
 
 	private static final String KEY_TEMPO = "METRONOME_TEMPO";
 	private static final String PREFS = "metronome.prefs";
@@ -48,7 +48,7 @@ public class Metronome extends ActionBarActivity {
 		setContentView(R.layout.activity_actionbar);
 
 		PowerManager pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
-		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MetronomeLock");
+		//mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MetronomeLock");
 		tp = new TickPlayer(this);
 
 		String bpm[]=new String[MAX_TEMPO+1];
@@ -259,8 +259,8 @@ public class Metronome extends ActionBarActivity {
 	private void restart()
 	{
 		if (metronomeRunning) {
-			tp.onStop();
-			tp.onStart(/*mPeriod,*/ metronomeTempo);
+			tp.stop();
+			tp.start(/*mPeriod,*/ metronomeTempo);
 		}
 	}
 
@@ -297,13 +297,13 @@ public class Metronome extends ActionBarActivity {
 	private void changeState() {
      	metronomeRunning = !metronomeRunning;
     	if (metronomeRunning) {
-    		mWakeLock.acquire();
+    		//mWakeLock.acquire();
     		
     		mStartStopButton.setText(R.string.stop);
-    		tp.onStart(/*mPeriod,*/ metronomeTempo);
+    		tp.start(/*mPeriod,*/ metronomeTempo);
     	} else {
-    		mWakeLock.release();
-    		tp.onStop();
+    		//mWakeLock.release();
+    		tp.stop();
     		
     		mStartStopButton.setText(R.string.start);
     	}
