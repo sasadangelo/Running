@@ -38,19 +38,19 @@ public class TickPlayer  {
 		mWakeLock.release();
 	}
 
-	public void pause() {
-		metronomeRunning = false;
-		tickPool.pause();
+	//public void pause() {
+	//	metronomeRunning = false;
+	//	tickPool.pause();
 		//mHandler.removeMessages(MSG);
 		//mWakeLock.release();
-	}
+	//}
 
-	public void resume() {
-		metronomeRunning = true;
-		tickPool.resume();
+	//public void resume() {
+	//	metronomeRunning = true;
+	//	tickPool.resume();
 		//mHandler.removeMessages(MSG);
 		//mWakeLock.release();
-	}
+	//}
 
 	public void onDestroy() {
 		stop();

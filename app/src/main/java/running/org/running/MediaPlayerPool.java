@@ -61,19 +61,19 @@ public final class MediaPlayerPool {
 		}
 	}
 
-	public void pause() {
-		for (int i = 0; i < mp.length; i++) {
-			if (mp[i].isPlaying())
-				mp[i].pause();
-		}
-	}
+	//public void pause() {
+		//for (int i = 0; i < mp.length; i++) {
+			//if (mp[i].isPlaying())
+				//	mp[i].pause();
+			//}
+		//}
 
-	public void resume() {
-		for (int i = 0; i < mp.length; i++) {
-			if (!mp[i].isPlaying())
-				mp[i].start();
-		}
-	}
+	//public void resume() {
+	//	for (int i = 0; i < mp.length; i++) {
+	//		if (!mp[i].isPlaying())
+//				mp[i].start();
+	//	}
+	//}
 
 	public void stop() {
 		for (int i = 0; i < mp.length; i++) {

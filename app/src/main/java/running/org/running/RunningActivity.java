@@ -90,6 +90,7 @@ public class RunningActivity extends Activity implements Observer {
                 if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
                     tp.stop();
                 }
+                finish();
                 startActivity(intent);
             }
         });
@@ -100,9 +101,8 @@ public class RunningActivity extends Activity implements Observer {
                 customHandler.removeCallbacks(updateTimerThread);
                 pauseButton.setVisibility(View.GONE);
                 resumeButton.setVisibility(View.VISIBLE);
-                tp.pause();
                 if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
-                    tp.pause();
+                    tp.stop();
                 }
             }
         });
@@ -114,7 +114,7 @@ public class RunningActivity extends Activity implements Observer {
                 resumeButton.setVisibility(View.GONE);
                 pauseButton.setVisibility(View.VISIBLE);
                 if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
-                    tp.resume();
+                    tp.start(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
                 }
             }
         });
