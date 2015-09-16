@@ -25,31 +25,29 @@ import android.util.Log;
 
 public final class MediaPlayerPool {
 	private MediaPlayer mp[];
-	int mLast;
-	
+	private int mLast;
+	private boolean paused = false;
+
 	public MediaPlayerPool(Context ctx, int num, int resId) {
 		mp = new MediaPlayer[num];
 		for (int i = 0; i < num; i++) {
 			mp[i] = MediaPlayer.create(ctx, resId);
 			mp[i].setLooping(false);
 			mp[i].setOnErrorListener(new MediaPlayer.OnErrorListener() {
-
 				@Override
 				public boolean onError(MediaPlayer mp, int what, int extra) {
 					Log.v("MediaPlayerPool", "error on media player what=" + what + " extra=" + extra);
 					return false;
 				}
-				
 			});
 		}
 		mLast = -1;
 	}
 	
-	public void start() {
+	public void play() {
 		for (int i = mLast + 1; i < mp.length; i++) {
 			if (!mp[i].isPlaying()) {
 				mLast = i;
-				//Log.i("metronome", "starting1 i=" + i);
 				mp[i].start();
 				return;
 			}
@@ -62,7 +60,21 @@ public final class MediaPlayerPool {
 			}
 		}
 	}
-	
+
+	public void pause() {
+		for (int i = 0; i < mp.length; i++) {
+			if (mp[i].isPlaying())
+				mp[i].pause();
+		}
+	}
+
+	public void resume() {
+		for (int i = 0; i < mp.length; i++) {
+			if (!mp[i].isPlaying())
+				mp[i].start();
+		}
+	}
+
 	public void stop() {
 		for (int i = 0; i < mp.length; i++) {
 			if (mp[i].isPlaying())
