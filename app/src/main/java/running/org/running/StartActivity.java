@@ -3,6 +3,7 @@ package running.org.running;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -119,25 +120,6 @@ public class StartActivity extends ActionBarActivity implements Observer {
         Log.i(LOG_TAG, "onOptionsItemSelected -- begin");
         boolean result = true;
 
-        //switch(item.getItemId()) {
-        //    case R.id.menu_about: {
-        //        displayAboutDialog();
-        //        break;
-        //    }
-        //    case R.id.unit_kmh: {
-        //        AppSettings.getInstance().putInt(AppSettings.SPEED_PEACE_PREF, Constants.INDEX_KMH);
-        //        break;
-        //    }
-        //    case R.id.unit_mk: {
-        //        AppSettings.getInstance().putInt(AppSettings.SPEED_PEACE_PREF, Constants.INDEX_MIN_KM);
-        //        break;
-        //    }
-        //    default: {
-        //        result = super.onOptionsItemSelected(item);
-        //        break;
-        //    }
-        //}
-        //return result;
         switch (item.getItemId()) {
             case R.id.action_metronome:
                 Intent i = new Intent(this, SettingsActivity.class);
@@ -199,24 +181,6 @@ public class StartActivity extends ActionBarActivity implements Observer {
             }
         }
     }
-
-    //private void displayAboutDialog() {
-    //    Log.i(LOG_TAG, "displayAboutDialog -- begin");
-    //    final LayoutInflater inflator = LayoutInflater.from(this);
-    //    final View settingsview = inflator.inflate(R.layout.activity_about, null);
-    //    final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-
-    //    builder.setTitle(getString(R.string.app_name));
-    //    builder.setView(settingsview);
-
-    //    builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-    //        @Override
-    //        public void onClick(DialogInterface dialog, int which) {
-    //        }
-    //    });
-
-    //    builder.create().show();
-    //}
 
     private void setSpeedText(int textid, String text) {
         Log.i(LOG_TAG, "setSpeedText -- begin");

@@ -75,7 +75,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 							break;
 						}
 					}
-					AppSettings.getInstance().putInt(AppSettings.METRONOME_SETTING, Constants.METRONOME_SETTING_ON);
+					AppSettings.getInstance().putBoolean(AppSettings.METRONOME_SETTING, true);
 				} else {
 					metronomeCategorySettings.removePreference(modeMetronomeSettings);
 					metronomeCategorySettings.removePreference(stepsByMinuteSettings);
@@ -83,13 +83,13 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 					metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
 					metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
 					metronomeCategorySettings.removePreference(repeatMetronomeSettings);
-					AppSettings.getInstance().putInt(AppSettings.METRONOME_SETTING, Constants.METRONOME_SETTING_OFF);
+					AppSettings.getInstance().putBoolean(AppSettings.METRONOME_SETTING, false);
 				}
 				return true;
 			}
 		});
 
-		if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_OFF) {
+		if (!AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
 			metronomeSettings.setChecked(false);
 			metronomeCategorySettings.removePreference(modeMetronomeSettings);
 			metronomeCategorySettings.removePreference(stepsByMinuteSettings);

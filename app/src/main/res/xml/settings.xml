@@ -35,8 +35,8 @@
             android:title="Tempo"
             android:dialogTitle="Tempo"
             android:key="stepsByMinuteTimeSettings"
-            android:summary="120"
-            android:defaultValue="120"
+            android:summary="60"
+            android:defaultValue="60"
             android:entries="@array/stepsByMinuteTimeSetting"
             android:entryValues="@array/stepsByMinuteTimeValues" />
         <ListPreference

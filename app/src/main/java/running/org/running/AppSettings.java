@@ -2,22 +2,22 @@ package running.org.running;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class AppSettings {
     private static AppSettings instance = null;
 
-    //private static final String UNIT_STRING = "MeasureUnit";
     private static final String PREF_NAME = "RunningApp";
 
-    public static final String SPEED_PEACE_SETTING = "SpeedPeaceSetting";
+    public static final String SPEED_PEACE_SETTING = "listSpeedSettings";
 
-    public static final String METRONOME_SETTING = "MetronomeSetting";
-    public static final String MODE_METRONOME_SETTING = "ModeMetronomeSetting";
-    public static final String STEPS_BY_MINUTE_SETTING = "StepsByMinuteSetting";
-    public static final String STEPS_BY_MINUTE_TIME_SETTING = "StepsByMinuteTimeSetting";
-    public static final String STEPS_BY_MINUTE_2ND_INTERVAL_SETTING = "StepsByMinuteSecondIntervalSetting";
-    public static final String STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING = "StepsByMinuteSecondIntervalTimeSetting";
-    public static final String REPEAT_METRONOME_SETTING = "RepeatMetronomeSetting";
+    public static final String METRONOME_SETTING = "metronomeSettings";
+    public static final String MODE_METRONOME_SETTING = "modeMetronomeSettings";
+    public static final String STEPS_BY_MINUTE_SETTING = "stepsByMinuteSettings";
+    public static final String STEPS_BY_MINUTE_TIME_SETTING = "stepsByMinuteTimeSettings";
+    public static final String STEPS_BY_MINUTE_2ND_INTERVAL_SETTING = "stepsByMinuteSecondIntervalSettings";
+    public static final String STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING = "stepsByMinuteSecondIntervalTimeSettings";
+    public static final String REPEAT_METRONOME_SETTING = "repeatMetronomeSettings";
 
     public static AppSettings getInstance(){
         if (instance == null)
@@ -26,26 +26,47 @@ public class AppSettings {
     }
 
     protected AppSettings() {
+        PreferenceManager.setDefaultValues(RunningApp.applicationContext, PREF_NAME, Context.MODE_PRIVATE, R.xml.settings, false);
     }
 
-    //public int getMeasureUnit(){
-    //    return getInt(AppSettings.UNIT_STRING);
-    //}
+    public String getString(String key) {
+        return getString(key, "");
+    }
 
-    //public void setMeasureUnit(int limit){
-    //    putInt(AppSettings.UNIT_STRING, limit);
-    //}
+    public String getString(String key, String defaultValue) {
+        SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return pref.getString(key, defaultValue);
+    }
 
     public int getInt(String key) {
-        SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, 0);
-        return pref.getInt(key, 0);
+        return getInt(key, 0);
+    }
+
+    public int getInt(String key, int defaultValue) {
+        SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return Integer.parseInt(pref.getString(key, "" + defaultValue));
+    }
+
+    public boolean getBoolean(String key) {
+        return getBoolean(key, false);
+    }
+
+    public boolean getBoolean(String key, boolean defaultValue) {
+        SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        return pref.getBoolean(key, defaultValue);
     }
 
     public void putInt(String key, int value) {
-        SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, 0);
+        SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-
         editor.putInt(key, value);
+        editor.commit();
+    }
+
+    public void putBoolean(String key, boolean value) {
+        SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(key, value);
         editor.commit();
     }
 }

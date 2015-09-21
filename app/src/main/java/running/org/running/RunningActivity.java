@@ -87,7 +87,7 @@ public class RunningActivity extends Activity implements Observer {
                 intent.putExtra(SPEED_MESSAGE, speedValue.getText().toString());
                 intent.putExtra(AVERAGE_SPEED_MESSAGE, averageSpeedValue.getText().toString());
                 intent.putExtra(DISTANCE_MESSAGE, distanceValue.getText().toString());
-                if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
+                if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
                     tp.stop();
                 }
                 finish();
@@ -101,7 +101,7 @@ public class RunningActivity extends Activity implements Observer {
                 customHandler.removeCallbacks(updateTimerThread);
                 pauseButton.setVisibility(View.GONE);
                 resumeButton.setVisibility(View.VISIBLE);
-                if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
+                if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
                     tp.stop();
                 }
             }
@@ -113,7 +113,7 @@ public class RunningActivity extends Activity implements Observer {
                 customHandler.postDelayed(updateTimerThread, 0);
                 resumeButton.setVisibility(View.GONE);
                 pauseButton.setVisibility(View.VISIBLE);
-                if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
+                if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
                     tp.start(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
                 }
             }
@@ -128,8 +128,9 @@ public class RunningActivity extends Activity implements Observer {
         gpsResource.attach(this);
 
         tp = new TickPlayer(this);
-        if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
-            tp.start(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
+        if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
+            int stepsByMinute = AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING);
+            tp.start(stepsByMinute);
         }
     }
 
@@ -138,7 +139,7 @@ public class RunningActivity extends Activity implements Observer {
         Log.i(LOG_TAG, "onDestroy -- begin");
         gpsResource.destroy();
         gpsResource = null;
-        if (AppSettings.getInstance().getInt(AppSettings.METRONOME_SETTING)==Constants.METRONOME_SETTING_ON) {
+        if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
             tp.stop();
         }
         super.onDestroy();
