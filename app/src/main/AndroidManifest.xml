@@ -4,16 +4,12 @@
 
     <application android:name="running.org.running.RunningApp" android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:theme="@style/AppTheme" >
         <activity
-            android:name=".Metronome"
-            android:label="@string/app_name" android:theme="@style/Theme.AppCompat.Light">
-        </activity>
-        <activity
             android:name=".SettingsActivity"
             android:label="@string/app_name"
-            android:parentActivityName=".Metronome">
+            android:parentActivityName=".StartActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".Metronome" />
+                android:value=".StartActivity" />
         </activity>
         <activity
             android:name=".RunningActivity"

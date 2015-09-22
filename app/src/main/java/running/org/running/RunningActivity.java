@@ -66,6 +66,7 @@ public class RunningActivity extends Activity implements Observer {
         averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
         distanceValue = (TextView) findViewById(R.id.distanceValue);
 
+        String s = AppSettings.getInstance().getString(AppSettings.SPEED_PEACE_SETTING);
         String unitString = measurementUnitString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
         String speedPeaceString = speedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
         String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));

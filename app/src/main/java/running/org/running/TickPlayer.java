@@ -35,22 +35,14 @@ public class TickPlayer  {
 		metronomeRunning = false;
 		tickPool.stop();
 		mHandler.removeMessages(MSG);
-		mWakeLock.release();
+		if (mWakeLock != null) {
+			try {
+				mWakeLock.release();
+			} catch (Throwable th) {
+				// ignoring this exception, probably wakeLock was already released
+			}
+		}
 	}
-
-	//public void pause() {
-	//	metronomeRunning = false;
-	//	tickPool.pause();
-		//mHandler.removeMessages(MSG);
-		//mWakeLock.release();
-	//}
-
-	//public void resume() {
-	//	metronomeRunning = true;
-	//	tickPool.resume();
-		//mHandler.removeMessages(MSG);
-		//mWakeLock.release();
-	//}
 
 	public void onDestroy() {
 		stop();

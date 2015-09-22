@@ -43,8 +43,10 @@ public class AppSettings {
     }
 
     public int getInt(String key, int defaultValue) {
-        SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        return Integer.parseInt(pref.getString(key, "" + defaultValue));
+        //SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+        //return pref.getInt(key, defaultValue);
+        String s=getString(key, "" + defaultValue);
+        return Integer.parseInt(s);
     }
 
     public boolean getBoolean(String key) {
