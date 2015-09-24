@@ -23,7 +23,14 @@ public class TickPlayer  {
 		mWakeLock.acquire();
 		run();
 	}
-	
+
+	public void start(int ticksPerSec, long ticksPerSecTime, int ticksPerSec2nd, long ticksPerSecTime2nd, int repeat) {
+		metronomeRunning = true;
+		mTickDuration = 60000 / ticksPerSec;
+		mWakeLock.acquire();
+		run();
+	}
+
 	private  void run() {
 		if (!metronomeRunning)
 			return;

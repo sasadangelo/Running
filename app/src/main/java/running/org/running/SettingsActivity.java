@@ -41,6 +41,7 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		addPreferencesFromResource(R.xml.settings);
+
 		metronomeCategorySettings = (PreferenceCategory) findPreference(KEY_METRONOME_CATEGORY_SETTINGS);
 
 		listSpeedSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_SPEED_SETTINGS);

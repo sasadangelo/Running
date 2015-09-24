@@ -130,8 +130,15 @@ public class RunningActivity extends Activity implements Observer {
 
         tp = new TickPlayer(this);
         if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-            int stepsByMinute = AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING);
-            tp.start(stepsByMinute);
+            if (AppSettings.getInstance().getInt(AppSettings.MODE_METRONOME_SETTING)==Constants.MODE_METRONOME_SETTING_CONTINUE) {
+                tp.start(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
+            } else {
+                tp.start(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
+                        AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING),
+                        AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_SETTING),
+                        AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING),
+                        AppSettings.getInstance().getInt(AppSettings.REPEAT_METRONOME_SETTING));
+            }
         }
     }
 
