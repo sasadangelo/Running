@@ -8,8 +8,10 @@ import android.os.PowerManager;
 public class TickPlayer  {
 	private MediaPlayerPool tickPool;
 	private boolean metronomeRunning = false;
+	private PowerManager.WakeLock mWakeLock;
+	private MetronomeConfiguration configuration;
 	private long tickDuration;
-	PowerManager.WakeLock mWakeLock;
+	private long numTicks;
 
 	public TickPlayer(Context ctx) {
 		PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
@@ -17,10 +19,16 @@ public class TickPlayer  {
 		tickPool = new MediaPlayerPool(ctx, 10, R.raw.tock);
 	}
 	
-	public void start(MetronomeConfiguration configuration) {
+	public void start(MetronomeConfiguration conf) {
 		metronomeRunning = true;
 		mWakeLock.acquire();
+		configuration = conf;
 		tickDuration = 60000 / configuration.getStepsByMinute();
+		if (!configuration.isContinue()) {
+			numTicks = Long.MAX_VALUE;
+		} else {
+			numTicks = configuration.getStepsByMinute() * configuration.getIntervalDuration();
+		}
 		run();
 	}
 
@@ -28,7 +36,12 @@ public class TickPlayer  {
 		if (!metronomeRunning)
 			return;
 		tickPool.play();
-		mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG), tickDuration);
+		if (numTicks < Long.MAX_VALUE && numTicks > 0) numTicks--;
+		if (numTicks > 0) {
+			mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG), tickDuration);
+		} else {
+            stop();
+		}
 	}
 	
 	public void stop() {
