@@ -12,12 +12,8 @@ public class AppSettings {
     public static final String SPEED_PEACE_SETTING = "listSpeedSettings";
 
     public static final String METRONOME_SETTING = "metronomeSettings";
-    public static final String MODE_METRONOME_SETTING = "modeMetronomeSettings";
     public static final String STEPS_BY_MINUTE_SETTING = "stepsByMinuteSettings";
     public static final String STEPS_BY_MINUTE_TIME_SETTING = "stepsByMinuteTimeSettings";
-    public static final String STEPS_BY_MINUTE_2ND_INTERVAL_SETTING = "stepsByMinuteSecondIntervalSettings";
-    public static final String STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING = "stepsByMinuteSecondIntervalTimeSettings";
-    public static final String REPEAT_METRONOME_SETTING = "repeatMetronomeSettings";
 
     public static AppSettings getInstance(){
         if (instance == null)
@@ -43,8 +39,6 @@ public class AppSettings {
     }
 
     public int getInt(String key, int defaultValue) {
-        //SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        //return pref.getInt(key, defaultValue);
         String s=getString(key, "" + defaultValue);
         return Integer.parseInt(s);
     }
@@ -61,7 +55,7 @@ public class AppSettings {
     public void putInt(String key, int value) {
         SharedPreferences pref = RunningApp.applicationContext.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = pref.edit();
-        editor.putInt(key, value);
+        editor.putString(key, "" + value);
         editor.commit();
     }
 

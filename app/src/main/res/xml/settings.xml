@@ -16,13 +16,14 @@
             android:defaultValue="false"
             android:key="metronomeSettings"
             android:summary="" />
+        <!--
         <ListPreference
             android:title="Modalità"
             android:key="modeMetronomeSettings"
             android:defaultValue="0"
             android:entries="@array/modeMetronomeSetting"
             android:entryValues="@array/modeMetronomeValues"
-            android:dialogTitle="Modalità" />
+            android:dialogTitle="Modalità" /> -->
         <ListPreference
             android:title="Passi al minuto"
             android:dialogTitle="Passi al minuto"
@@ -35,10 +36,11 @@
             android:title="Tempo"
             android:dialogTitle="Tempo"
             android:key="stepsByMinuteTimeSettings"
-            android:summary="60"
-            android:defaultValue="60"
+            android:summary="Finché non lo fermo"
+            android:defaultValue="0"
             android:entries="@array/stepsByMinuteTimeSetting"
             android:entryValues="@array/stepsByMinuteTimeValues" />
+        <!--
         <ListPreference
             android:title="Passi al minuto (2° Intervallo)"
             android:dialogTitle="Passi al minuto (2° Intervallo)"
@@ -63,6 +65,7 @@
             android:defaultValue="0"
             android:entries="@array/repeatMetronomeSetting"
             android:entryValues="@array/repeatMetronomeValues" />
+            -->
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Informazioni" android:key="infoCategorySettings">

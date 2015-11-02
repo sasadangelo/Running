@@ -1,52 +1,70 @@
 package running.org.running;
 
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Handler;
 import android.os.Message;
 import android.os.PowerManager;
+import android.os.SystemClock;
 
 public class TickPlayer  {
-	private MediaPlayerPool tickPool;
+	private SoundPool tickPool;
+	private int soundID;
+	boolean loaded = false;
+	private float volume;
 	private boolean metronomeRunning = false;
 	private PowerManager.WakeLock mWakeLock;
 	private MetronomeConfiguration configuration;
-	private long tickDuration;
-	private long numTicks;
+	private long tickInterval;
+    private long tickDuration;
+    private long startTime;
 
 	public TickPlayer(Context ctx) {
 		PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
 		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MetronomeLock");
-		tickPool = new MediaPlayerPool(ctx, 10, R.raw.tock);
+
+        AudioManager audioManager = (AudioManager) ctx.getSystemService(ctx.AUDIO_SERVICE);
+		volume = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC) / (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        startTime = SystemClock.uptimeMillis();
+
+		tickPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+		tickPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+			@Override
+			public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+				loaded = true;
+			}
+		});
+		soundID = tickPool.load(ctx, R.raw.tock, 1);
 	}
 	
 	public void start(MetronomeConfiguration conf) {
 		metronomeRunning = true;
 		mWakeLock.acquire();
 		configuration = conf;
-		tickDuration = 60000 / configuration.getStepsByMinute();
-		if (!configuration.isContinue()) {
-			numTicks = Long.MAX_VALUE;
-		} else {
-			numTicks = configuration.getStepsByMinute() * configuration.getIntervalDuration();
-		}
+        tickInterval = 60000 / configuration.getStepsByMinute();
+        tickDuration = configuration.getIntervalDuration() == 0 ? Long.MAX_VALUE : configuration.getIntervalDuration();
 		run();
 	}
 
 	private  void run() {
 		if (!metronomeRunning)
 			return;
-		tickPool.play();
-		if (numTicks < Long.MAX_VALUE && numTicks > 0) numTicks--;
-		if (numTicks > 0) {
-			mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG), tickDuration);
+		if (loaded) {
+			tickPool.play(soundID, volume, volume, 1, 0, 1f);
+            if (tickDuration == Long.MAX_VALUE || SystemClock.uptimeMillis() < (startTime + tickDuration * 1000)) {
+                mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG), tickInterval);
+            } else {
+                stop();
+            }
 		} else {
-            stop();
-		}
+            mHandler.sendMessageDelayed(mHandler.obtainMessage(MSG), tickInterval);
+        }
 	}
 	
 	public void stop() {
 		metronomeRunning = false;
-		tickPool.stop();
+		tickPool.stop(soundID);
 		mHandler.removeMessages(MSG);
 		if (mWakeLock != null) {
 			try {
@@ -59,7 +77,6 @@ public class TickPlayer  {
 
 	public void onDestroy() {
 		stop();
-		tickPool.onDestroy();
 	}
 
 	private static final int MSG = 1;

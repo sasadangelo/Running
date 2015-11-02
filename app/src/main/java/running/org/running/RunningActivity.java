@@ -115,17 +115,9 @@ public class RunningActivity extends Activity implements Observer {
                 resumeButton.setVisibility(View.GONE);
                 pauseButton.setVisibility(View.VISIBLE);
                 if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-                    MetronomeConfiguration configuration = null;
-                    if (AppSettings.getInstance().getInt(AppSettings.MODE_METRONOME_SETTING)==Constants.MODE_METRONOME_SETTING_CONTINUE) {
-                        configuration = new MetronomeConfiguration(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
-                    } else {
-                        configuration = new MetronomeConfiguration(
+                    MetronomeConfiguration configuration = new MetronomeConfiguration(
                                 AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
-                                AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING),
-                                AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_SETTING),
-                                AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING),
-                                AppSettings.getInstance().getInt(AppSettings.REPEAT_METRONOME_SETTING));
-                    }
+                                AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING));
                     tp.start(configuration);
                 }
             }
@@ -141,17 +133,8 @@ public class RunningActivity extends Activity implements Observer {
 
         tp = new TickPlayer(this);
         if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-            MetronomeConfiguration configuration = null;
-            if (AppSettings.getInstance().getInt(AppSettings.MODE_METRONOME_SETTING)==Constants.MODE_METRONOME_SETTING_CONTINUE) {
-                configuration = new MetronomeConfiguration(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING));
-            } else {
-                configuration = new MetronomeConfiguration(
-                        AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
-                        AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING),
-                        AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_SETTING),
-                        AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING),
-                        AppSettings.getInstance().getInt(AppSettings.REPEAT_METRONOME_SETTING));
-            }
+            MetronomeConfiguration configuration = new MetronomeConfiguration(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
+                    AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING));
             tp.start(configuration);
         }
     }

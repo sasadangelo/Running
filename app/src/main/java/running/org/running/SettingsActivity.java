@@ -28,12 +28,12 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
 	private PreferenceCategory metronomeCategorySettings;
 	private CheckBoxPreference metronomeSettings;
-	private ListPreference modeMetronomeSettings;
+	//private ListPreference modeMetronomeSettings;
 	private ListPreference stepsByMinuteSettings;
 	private ListPreference stepsByMinuteTimeSettings;
-	private ListPreference stepsByMinuteSecondIntervalSettings;
-	private ListPreference stepsByMinuteSecondIntervalTimeSettings;
-	private ListPreference repeatMetronomeSettings;
+	//private ListPreference stepsByMinuteSecondIntervalSettings;
+	//private ListPreference stepsByMinuteSecondIntervalTimeSettings;
+	//private ListPreference repeatMetronomeSettings;
 
 	private Spinner stepsPerMinuteSpinner;
 
@@ -46,44 +46,44 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
 		listSpeedSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_SPEED_SETTINGS);
 		metronomeSettings = (CheckBoxPreference)getPreferenceScreen().findPreference(KEY_METRONOME_SETTINGS);
-		modeMetronomeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_MODE_METRONOME_SETTINGS);
+		//modeMetronomeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_MODE_METRONOME_SETTINGS);
 		stepsByMinuteSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_STEPS_BY_MINUTE_SETTINGS);
 		stepsByMinuteTimeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_STEPS_BY_MINUTE_TIME_SETTINGS);
-		stepsByMinuteSecondIntervalSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_STEPS_BY_MINUTE_2ND_INTERVAL_SETTINGS);
-		stepsByMinuteSecondIntervalTimeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTINGS);
-		repeatMetronomeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_REPEAT_METRONOME);
+		//stepsByMinuteSecondIntervalSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_STEPS_BY_MINUTE_2ND_INTERVAL_SETTINGS);
+		//stepsByMinuteSecondIntervalTimeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTINGS);
+		//repeatMetronomeSettings = (ListPreference)getPreferenceScreen().findPreference(KEY_REPEAT_METRONOME);
 
 		metronomeSettings.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
 			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				int modeMetronomeSetting = Integer.parseInt(modeMetronomeSettings.getValue().toString());
+				//int modeMetronomeSetting = Integer.parseInt(modeMetronomeSettings.getValue().toString());
 
 				if (newValue.toString().equals("true")) {
-					metronomeCategorySettings.addPreference(modeMetronomeSettings);
+					//metronomeCategorySettings.addPreference(modeMetronomeSettings);
 					metronomeCategorySettings.addPreference(stepsByMinuteSettings);
-					switch(modeMetronomeSetting) {
-						case Constants.MODE_METRONOME_SETTING_CONTINUE: {
-							metronomeCategorySettings.removePreference(stepsByMinuteTimeSettings);
-							metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
-							metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
-							metronomeCategorySettings.removePreference(repeatMetronomeSettings);
-							break;
-						}
-						case Constants.MODE_METRONOME_SETTING_INTERVAL: {
+					//switch(modeMetronomeSetting) {
+					//	case Constants.MODE_METRONOME_SETTING_CONTINUE: {
+					//		metronomeCategorySettings.removePreference(stepsByMinuteTimeSettings);
+					//		metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
+					//		metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
+					//		metronomeCategorySettings.removePreference(repeatMetronomeSettings);
+					//		break;
+					//	}
+					//	case Constants.MODE_METRONOME_SETTING_INTERVAL: {
 							metronomeCategorySettings.addPreference(stepsByMinuteTimeSettings);
-							metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalSettings);
-							metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalTimeSettings);
-							metronomeCategorySettings.addPreference(repeatMetronomeSettings);
-							break;
-						}
-					}
+					//		metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalSettings);
+					//		metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalTimeSettings);
+					//		metronomeCategorySettings.addPreference(repeatMetronomeSettings);
+					//		break;
+					//	}
+					//}
 					AppSettings.getInstance().putBoolean(AppSettings.METRONOME_SETTING, true);
 				} else {
-					metronomeCategorySettings.removePreference(modeMetronomeSettings);
+				//	metronomeCategorySettings.removePreference(modeMetronomeSettings);
 					metronomeCategorySettings.removePreference(stepsByMinuteSettings);
 					metronomeCategorySettings.removePreference(stepsByMinuteTimeSettings);
-					metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
-					metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
-					metronomeCategorySettings.removePreference(repeatMetronomeSettings);
+				//	metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
+				//	metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
+				//	metronomeCategorySettings.removePreference(repeatMetronomeSettings);
 					AppSettings.getInstance().putBoolean(AppSettings.METRONOME_SETTING, false);
 				}
 				return true;
@@ -92,33 +92,33 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 
 		if (!AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
 			metronomeSettings.setChecked(false);
-			metronomeCategorySettings.removePreference(modeMetronomeSettings);
+			//metronomeCategorySettings.removePreference(modeMetronomeSettings);
 			metronomeCategorySettings.removePreference(stepsByMinuteSettings);
 			metronomeCategorySettings.removePreference(stepsByMinuteTimeSettings);
-			metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
-			metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
-			metronomeCategorySettings.removePreference(repeatMetronomeSettings);
+			//metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
+			//metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
+			//metronomeCategorySettings.removePreference(repeatMetronomeSettings);
 		} else {
 			metronomeSettings.setChecked(true);
-			int modeMetronomeSetting = Integer.parseInt(modeMetronomeSettings.getValue().toString());
-			metronomeCategorySettings.addPreference(modeMetronomeSettings);
+			//int modeMetronomeSetting = Integer.parseInt(modeMetronomeSettings.getValue().toString());
+			//metronomeCategorySettings.addPreference(modeMetronomeSettings);
 			metronomeCategorySettings.addPreference(stepsByMinuteSettings);
-			switch(modeMetronomeSetting) {
-				case Constants.MODE_METRONOME_SETTING_CONTINUE: {
-					metronomeCategorySettings.removePreference(stepsByMinuteTimeSettings);
-					metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
-					metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
-					metronomeCategorySettings.removePreference(repeatMetronomeSettings);
-					break;
-				}
-				case Constants.MODE_METRONOME_SETTING_INTERVAL: {
+			//switch(modeMetronomeSetting) {
+			//	case Constants.MODE_METRONOME_SETTING_CONTINUE: {
+			//		metronomeCategorySettings.removePreference(stepsByMinuteTimeSettings);
+			//		metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
+			//		metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
+			//		metronomeCategorySettings.removePreference(repeatMetronomeSettings);
+			//		break;
+			//	}
+			//	case Constants.MODE_METRONOME_SETTING_INTERVAL: {
 					metronomeCategorySettings.addPreference(stepsByMinuteTimeSettings);
-					metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalSettings);
-					metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalTimeSettings);
-					metronomeCategorySettings.addPreference(repeatMetronomeSettings);
-					break;
-				}
-			}
+			//		metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalSettings);
+			//		metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalTimeSettings);
+			//		metronomeCategorySettings.addPreference(repeatMetronomeSettings);
+			//		break;
+			//	}
+			//}
 		}
 	}
 
@@ -127,12 +127,8 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 		super.onResume();
 		// Setup the initial values
 		listSpeedSettings.setSummary(listSpeedSettings.getEntry().toString());
-		modeMetronomeSettings.setSummary(modeMetronomeSettings.getEntry().toString());
 		stepsByMinuteSettings.setSummary(stepsByMinuteSettings.getEntry().toString());
 		stepsByMinuteTimeSettings.setSummary(stepsByMinuteTimeSettings.getEntry().toString());
-		stepsByMinuteSecondIntervalSettings.setSummary(stepsByMinuteSecondIntervalSettings.getEntry().toString());
-		stepsByMinuteSecondIntervalTimeSettings.setSummary(stepsByMinuteSecondIntervalTimeSettings.getEntry());
-		repeatMetronomeSettings.setSummary(repeatMetronomeSettings.getEntry());
 
 		// Set up a listener whenever a key changes
 		getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
@@ -162,29 +158,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 				}
 			}
 		}
-		if (key.equals(KEY_MODE_METRONOME_SETTINGS)) {
-			String s = modeMetronomeSettings.getValue().toString();
-			int modeMetronomeSetting = Integer.parseInt(s);
-			modeMetronomeSettings.setSummary(modeMetronomeSettings.getEntry().toString());
-			switch(modeMetronomeSetting) {
-				case Constants.MODE_METRONOME_SETTING_CONTINUE: {
-					metronomeCategorySettings.removePreference(stepsByMinuteTimeSettings);
-					metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalSettings);
-					metronomeCategorySettings.removePreference(stepsByMinuteSecondIntervalTimeSettings);
-					metronomeCategorySettings.removePreference(repeatMetronomeSettings);
-					AppSettings.getInstance().putInt(AppSettings.MODE_METRONOME_SETTING, Constants.MODE_METRONOME_SETTING_CONTINUE);
-					break;
-				}
-				case Constants.MODE_METRONOME_SETTING_INTERVAL: {
-					metronomeCategorySettings.addPreference(stepsByMinuteTimeSettings);
-					metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalSettings);
-					metronomeCategorySettings.addPreference(stepsByMinuteSecondIntervalTimeSettings);
-					metronomeCategorySettings.addPreference(repeatMetronomeSettings);
-					AppSettings.getInstance().putInt(AppSettings.MODE_METRONOME_SETTING, Constants.MODE_METRONOME_SETTING_INTERVAL);
-					break;
-				}
-			}
-		}
 
 		if (key.equals(KEY_STEPS_BY_MINUTE_SETTINGS)) {
 			int stepsByMinuteSetting = Integer.parseInt(stepsByMinuteSettings.getValue());
@@ -196,24 +169,6 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 			int stepsByMinuteTimeSetting = Integer.parseInt(stepsByMinuteTimeSettings.getValue());
 			stepsByMinuteTimeSettings.setSummary(stepsByMinuteTimeSettings.getEntry().toString());
 			AppSettings.getInstance().putInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING, stepsByMinuteTimeSetting);
-		}
-
-		if (key.equals(KEY_STEPS_BY_MINUTE_2ND_INTERVAL_SETTINGS)) {
-			int stepsByMinuteSecondIntervalSetting = Integer.parseInt(stepsByMinuteSecondIntervalSettings.getValue());
-			stepsByMinuteSecondIntervalSettings.setSummary(stepsByMinuteSecondIntervalSettings.getEntry().toString());
-			AppSettings.getInstance().putInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_SETTING, stepsByMinuteSecondIntervalSetting);
-		}
-
-		if (key.equals(KEY_STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTINGS)) {
-			int stepsByMinuteSecondIntervalTimeSetting = Integer.parseInt(stepsByMinuteSecondIntervalTimeSettings.getValue());
-			stepsByMinuteSecondIntervalTimeSettings.setSummary(stepsByMinuteSecondIntervalTimeSettings.getEntry().toString());
-			AppSettings.getInstance().putInt(AppSettings.STEPS_BY_MINUTE_2ND_INTERVAL_TIME_SETTING, stepsByMinuteSecondIntervalTimeSetting);
-		}
-
-		if (key.equals(KEY_REPEAT_METRONOME)) {
-			int repeatMetronomeSetting = Integer.parseInt(repeatMetronomeSettings.getValue());
-			repeatMetronomeSettings.setSummary(repeatMetronomeSettings.getEntry().toString());
-			AppSettings.getInstance().putInt(AppSettings.REPEAT_METRONOME_SETTING, repeatMetronomeSetting);
 		}
 	}
 }
