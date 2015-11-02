@@ -8,7 +8,7 @@ import android.os.Message;
 import android.os.PowerManager;
 import android.os.SystemClock;
 
-public class TickPlayer  {
+public class MetronomePlayer {
 	private SoundPool tickPool;
 	private int soundID;
 	boolean loaded = false;
@@ -20,7 +20,7 @@ public class TickPlayer  {
     private long tickDuration;
     private long startTime;
 
-	public TickPlayer(Context ctx) {
+	public MetronomePlayer(Context ctx) {
 		PowerManager pm = (PowerManager) ctx.getSystemService(Context.POWER_SERVICE);
 		mWakeLock = pm.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "MetronomeLock");
 
@@ -43,7 +43,7 @@ public class TickPlayer  {
 		mWakeLock.acquire();
 		configuration = conf;
         tickInterval = 60000 / configuration.getStepsByMinute();
-        tickDuration = configuration.getIntervalDuration() == 0 ? Long.MAX_VALUE : configuration.getIntervalDuration();
+        tickDuration = configuration.getDuration() == 0 ? Long.MAX_VALUE : configuration.getDuration();
 		run();
 	}
 

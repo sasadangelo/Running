@@ -51,7 +51,7 @@ public class RunningActivity extends Activity implements Observer {
     private TextView averageSpeedValue;
     private TextView distanceValue;
 
-    private TickPlayer tp;
+    private MetronomePlayer mp;
     private PowerManager.WakeLock mWakeLock;
 
     @Override
@@ -89,7 +89,7 @@ public class RunningActivity extends Activity implements Observer {
                 intent.putExtra(AVERAGE_SPEED_MESSAGE, averageSpeedValue.getText().toString());
                 intent.putExtra(DISTANCE_MESSAGE, distanceValue.getText().toString());
                 if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-                    tp.stop();
+                    mp.stop();
                 }
                 finish();
                 startActivity(intent);
@@ -103,7 +103,7 @@ public class RunningActivity extends Activity implements Observer {
                 pauseButton.setVisibility(View.GONE);
                 resumeButton.setVisibility(View.VISIBLE);
                 if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-                    tp.stop();
+                    mp.stop();
                 }
             }
         });
@@ -118,7 +118,7 @@ public class RunningActivity extends Activity implements Observer {
                     MetronomeConfiguration configuration = new MetronomeConfiguration(
                                 AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
                                 AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING));
-                    tp.start(configuration);
+                    mp.start(configuration);
                 }
             }
         });
@@ -131,11 +131,11 @@ public class RunningActivity extends Activity implements Observer {
         gpsResource = GPSResource.getInstance();
         gpsResource.attach(this);
 
-        tp = new TickPlayer(this);
+        mp = new MetronomePlayer(this);
         if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
             MetronomeConfiguration configuration = new MetronomeConfiguration(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
                     AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING));
-            tp.start(configuration);
+            mp.start(configuration);
         }
     }
 
@@ -145,7 +145,7 @@ public class RunningActivity extends Activity implements Observer {
         gpsResource.destroy();
         gpsResource = null;
         if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-            tp.stop();
+            mp.stop();
         }
         super.onDestroy();
     }
