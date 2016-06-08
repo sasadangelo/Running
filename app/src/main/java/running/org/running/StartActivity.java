@@ -24,10 +24,10 @@ public class StartActivity extends ActionBarActivity implements Observer {
     private Button startButton;
     private Button enableGPS;
 
-    private TextView timerValue;
-    private TextView speedValue;
-    private TextView averageSpeedValue;
-    private TextView distanceValue;
+    //private TextView timerValue;
+    //private TextView speedValue;
+    //private TextView averageSpeedValue;
+    //private TextView distanceValue;
 
     private AbsoluteSizeSpan sizeSpanLarge = null;
     private AbsoluteSizeSpan sizeSpanSmall = null;
@@ -42,21 +42,21 @@ public class StartActivity extends ActionBarActivity implements Observer {
         startButton = (Button) findViewById(R.id.startButton);
         enableGPS = (Button) findViewById(R.id.enableGPSButton);
 
-        timerValue = (TextView) findViewById(R.id.timerValue);
-        speedValue = (TextView) findViewById(R.id.speedValue);
-        averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
-        distanceValue = (TextView) findViewById(R.id.distanceValue);
+        //timerValue = (TextView) findViewById(R.id.timerValue);
+        //speedValue = (TextView) findViewById(R.id.speedValue);
+        //averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
+        //distanceValue = (TextView) findViewById(R.id.distanceValue);
 
-        Intent intent = getIntent();
-        String timeMessage = intent.getStringExtra(RunningActivity.TIME_MESSAGE);
-        String speedMessage = intent.getStringExtra(RunningActivity.SPEED_MESSAGE);
-        String averageSpeedMessage = intent.getStringExtra(RunningActivity.AVERAGE_SPEED_MESSAGE);
-        String distanceMessage = intent.getStringExtra(RunningActivity.DISTANCE_MESSAGE);
+        //Intent intent = getIntent();
+        //String timeMessage = intent.getStringExtra(RunningActivity.TIME_MESSAGE);
+        //String speedMessage = intent.getStringExtra(RunningActivity.SPEED_MESSAGE);
+        //String averageSpeedMessage = intent.getStringExtra(RunningActivity.AVERAGE_SPEED_MESSAGE);
+        //String distanceMessage = intent.getStringExtra(RunningActivity.DISTANCE_MESSAGE);
 
-        timerValue.setText(timeMessage);
-        speedValue.setText(speedMessage);
-        averageSpeedValue.setText(averageSpeedMessage);
-        distanceValue.setText(distanceMessage);
+        //timerValue.setText(timeMessage);
+        //speedValue.setText(speedMessage);
+        //averageSpeedValue.setText(averageSpeedMessage);
+        //distanceValue.setText(distanceMessage);
 
         gpsResource = GPSResource.getInstance();
         gpsResource.attach(this);

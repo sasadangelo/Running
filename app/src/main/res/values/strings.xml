@@ -5,14 +5,14 @@
     <string name="setting_unit">Veocità/Ritmo</string>
     <string name="time">Tempo</string>
     <string name="speed">Velocità</string>
-    <string name="peace">Ritmo</string>
+    <string name="peace">Ritmo Attuale</string>
     <string name="averageSpeed">Velocità media</string>
     <string name="averagePeace">Ritmo medio</string>
     <string name="distance">Distanza</string>
     <string name="unit_kmh">Km/h</string>
     <string name="unit_km">Km</string>
-    <string name="unit_minKm">min per Km</string>
-    <string name="info">Ricerca GPS...</string>
+    <string name="unit_minKm">min/Km</string>
+    <string name="info">Ricerca in corso</string>
     <string name="enableGPSButtonLabel">Abilita GPS</string>
     <string name="startButtonLabel">Vai a fare una Corsa</string>
     <string name="stopButtonLabel">Termina</string>
@@ -20,12 +20,13 @@
     <string name="resumeButtonLabel">Riprendi</string>
     <string name="gpsReady">Segnale GPS Presente</string>
     <string name="aboutMenuName">Informazioni</string>
+    <string name="average">Media</string>
+    <string name="doneActivity">Fatto</string>
+    <string name="calories">Calorie</string>
 
     <string name="metronomeCheckBoxLabel">Metronomo</string>
     <string name="metronome_continue">Continuo</string>
     <string name="metronome_intervals">Intervalli</string>
-
-
 
     <string name="start">Start</string>
     <string name="stop">Stop</string>
@@ -40,5 +41,8 @@
         <item>Uranus</item>
         <item>Neptune</item>
     </string-array>
+    <string name="title_activity_summary">SummaryActivity</string>
 
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>

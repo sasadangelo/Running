@@ -1,86 +1,268 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="#000000"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    android:weightSum="1">
 
-    <TextView  android:id="@+id/infoMessage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:textSize="30sp"
-        android:textColor="#ffffff"
-        android:text="@string/info"/>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.20">
 
-    <TextView  android:id="@+id/speedValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:textSize="25sp"
-        android:textColor="#ffffff"
-        android:text="" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.60"
+            android:background="@drawable/border">
 
-    <TextView  android:id="@+id/averageSpeedValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:textSize="25sp"
-        android:textColor="#ffffff"
-        android:text=""/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/time"
+                android:id="@+id/textLabel"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.20" />
 
-    <TextView  android:id="@+id/distanceValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="200dp"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentTop="true"
-        android:textSize="25sp"
-        android:textColor="#ffffff"
-        android:text=""/>
+            <TextView android:id="@+id/timerValue"
+                android:layout_width="fill_parent"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:textColor="#ff000000"
+                android:layout_weight="0.6"
+                android:text="00:00:00"
+                android:gravity="center_vertical|center_horizontal"
+                android:textSize="30dp" />
 
-    <TextView android:id="@+id/timerValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="250dp"
-        android:layout_centerHorizontal="true"
-        android:textSize="25sp"
-        android:textColor="#ffffff"
-        android:text="" />
+            <TextView  android:id="@+id/infoMessage"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:text="@string/info"
+                android:textColor="#ff646464"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.20" />
+        </LinearLayout>
 
-    <Button
-        android:id="@+id/pauseButton"
-        android:layout_width="90dp"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="38dp"
-        android:text="@string/pauseButtonLabel" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.4">
 
-    <Button
-        android:id="@+id/stopButton"
-        android:layout_width="90dp"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5">
+
+                <TextView  android:id="@+id/averageSpeedValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_alignParentTop="true"
+                    android:textColor="#ff787878"
+                    android:text="0:00"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:layout_gravity="top"
+                    android:layout_weight="0.6"
+                    android:background="#ffffffff" />
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="0.4"
+                    android:background="#ffffffff">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/average"
+                        android:id="@+id/averageLabel"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical|center_horizontal" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="@string/unit_minKm"
+                        android:id="@+id/averageSpeedUnitLabel"
+                        android:layout_weight="0.5"
+                        android:gravity="center_vertical|center_horizontal" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.5"
+                android:background="@drawable/border">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/caloriesValue"
+                    android:layout_weight="0.5"
+                    android:text="0"
+                    android:gravity="center_vertical|center_horizontal" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="@string/calories"
+                    android:id="@+id/caloriesLabel"
+                    android:layout_weight="0.5"
+                    android:gravity="center_vertical|center_horizontal" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.50"
+        android:background="#fff8f8f8"></LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.2"
+        android:background="@drawable/border">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/distance"
+                android:id="@+id/distanceLabel"
+                android:layout_weight="0.3"
+                android:gravity="center_vertical|center_horizontal" />
+
+            <TextView  android:id="@+id/distanceValue"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:textSize="25sp"
+                android:textColor="#ff000000"
+                android:text="0.00"
+                android:layout_weight="0.4"
+                android:gravity="center_vertical|center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/unit_km"
+                android:id="@+id/unitLengthLabel"
+                android:layout_weight="0.3"
+                android:gravity="center_vertical|center_horizontal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.5">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/peace"
+                android:id="@+id/speedLabel"
+                android:layout_weight="0.3"
+                android:gravity="center_vertical|center_horizontal" />
+
+            <TextView  android:id="@+id/speedValue"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:textSize="25sp"
+                android:textColor="#ff000000"
+                android:text="0:00"
+                android:layout_weight="0.4"
+                android:gravity="center_vertical|center_horizontal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/unit_minKm"
+                android:id="@+id/speedUnitLabel"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_weight="0.3" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         android:layout_alignParentLeft="true"
-        android:layout_marginLeft="38dp"
-        android:text="@string/stopButtonLabel" />
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/pauseButton"
+        android:layout_weight="0.10"
+        android:background="#ffffffff"
+        android:gravity="center_vertical|center_horizontal">
 
-    <Button
-        android:id="@+id/resumeButton"
-        android:layout_width="90dp"
-        android:layout_height="45dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="38dp"
-        android:text="@string/resumeButtonLabel" />
+        <Button
+            android:id="@+id/stopButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:text="@string/stopButtonLabel"
+            android:enabled="true"
+            android:layout_margin="3dp"
+            android:layout_weight="0.5" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/pauseButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/pauseButtonLabel"
+            android:enabled="true"
+            android:layout_margin="3dp"
+            android:layout_weight="0.5" />
+
+        <Button
+            android:id="@+id/resumeButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:text="@string/resumeButtonLabel"
+            android:visibility="gone"
+            android:enabled="true"
+            android:layout_weight="0.5"
+            android:layout_margin="3dp" />
+
+    </LinearLayout>
+</LinearLayout>

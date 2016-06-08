@@ -47,11 +47,14 @@ public class RunningActivity extends Activity implements Observer {
     private boolean mBug23937Checked = false;
     private long mBug23937Delta = 0;
 
+    private TextView speedLabel;
     private TextView speedValue;
+    private TextView speedUnitLabel;
     private TextView averageSpeedValue;
+    private TextView averageSpeedUnitLabel;
     private TextView distanceValue;
 
-    private MetronomePlayer mp;
+    //private MetronomePlayer mp;
     private PowerManager.WakeLock mWakeLock;
 
     @Override
@@ -63,18 +66,24 @@ public class RunningActivity extends Activity implements Observer {
 
         timerValue = (TextView) findViewById(R.id.timerValue);
         speedValue = (TextView) findViewById(R.id.speedValue);
+        speedLabel = (TextView) findViewById(R.id.speedLabel);
+        speedUnitLabel = (TextView) findViewById(R.id.speedUnitLabel);
         averageSpeedValue = (TextView) findViewById(R.id.averageSpeedValue);
+        averageSpeedUnitLabel = (TextView) findViewById(R.id.averageSpeedUnitLabel);
         distanceValue = (TextView) findViewById(R.id.distanceValue);
 
         String s = AppSettings.getInstance().getString(AppSettings.SPEED_PEACE_SETTING);
         String unitString = measurementUnitString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
         String speedPeaceString = speedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
-        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
+        //String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
 
-        timerValue.setText(getString(R.string.time) + ": " + "00:00");
-        speedValue.setText(speedPeaceString + ": " + "00:00 " + unitString);
-        averageSpeedValue.setText(averageSpeedPeaceString + ": " + "00:00 " + unitString);
-        distanceValue.setText(getString(R.string.distance) + ": " + "00:00 " + getString(R.string.unit_km));
+        //timerValue.setText(getString(R.string.time) + ": " + "00:00");
+        speedLabel.setText(speedPeaceString);
+        //speedValue.setText(speedPeaceString + ": " + "00:00 " + );
+        speedUnitLabel.setText(unitString);
+        //averageSpeedValue.setText(averageSpeedPeaceString + ": " + "00:00 " + unitString);
+        averageSpeedUnitLabel.setText(unitString);
+        //distanceValue.setText("00:00 ");
 
         stopButton = (Button) findViewById(R.id.stopButton);
         pauseButton = (Button) findViewById(R.id.pauseButton);
@@ -83,14 +92,14 @@ public class RunningActivity extends Activity implements Observer {
         stopButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 customHandler.removeCallbacks(updateTimerThread);
-                Intent intent = new Intent(RunningActivity.this, StartActivity.class);
+                Intent intent = new Intent(RunningActivity.this, SummaryActivity.class);
                 intent.putExtra(TIME_MESSAGE, timerValue.getText().toString());
                 intent.putExtra(SPEED_MESSAGE, speedValue.getText().toString());
                 intent.putExtra(AVERAGE_SPEED_MESSAGE, averageSpeedValue.getText().toString());
                 intent.putExtra(DISTANCE_MESSAGE, distanceValue.getText().toString());
-                if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-                    mp.stop();
-                }
+                //if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
+                //    mp.stop();
+                //}
                 finish();
                 startActivity(intent);
             }
@@ -102,9 +111,9 @@ public class RunningActivity extends Activity implements Observer {
                 customHandler.removeCallbacks(updateTimerThread);
                 pauseButton.setVisibility(View.GONE);
                 resumeButton.setVisibility(View.VISIBLE);
-                if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-                    mp.stop();
-                }
+                //if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
+                //    mp.stop();
+                //}
             }
         });
 
@@ -114,12 +123,12 @@ public class RunningActivity extends Activity implements Observer {
                 customHandler.postDelayed(updateTimerThread, 0);
                 resumeButton.setVisibility(View.GONE);
                 pauseButton.setVisibility(View.VISIBLE);
-                if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-                    MetronomeConfiguration configuration = new MetronomeConfiguration(
-                                AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
-                                AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING));
-                    mp.start(configuration);
-                }
+                //if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
+                //    MetronomeConfiguration configuration = new MetronomeConfiguration(
+                //                AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
+                //                AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING));
+                //    mp.start(configuration);
+                //}
             }
         });
 
@@ -131,12 +140,12 @@ public class RunningActivity extends Activity implements Observer {
         gpsResource = GPSResource.getInstance();
         gpsResource.attach(this);
 
-        mp = new MetronomePlayer(this);
-        if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-            MetronomeConfiguration configuration = new MetronomeConfiguration(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
-                    AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING));
-            mp.start(configuration);
-        }
+        //mp = new MetronomePlayer(this);
+        //if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
+        //    MetronomeConfiguration configuration = new MetronomeConfiguration(AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_SETTING),
+        //            AppSettings.getInstance().getInt(AppSettings.STEPS_BY_MINUTE_TIME_SETTING));
+        //    mp.start(configuration);
+        //}
     }
 
     @Override
@@ -144,9 +153,9 @@ public class RunningActivity extends Activity implements Observer {
         Log.i(LOG_TAG, "onDestroy -- begin");
         gpsResource.destroy();
         gpsResource = null;
-        if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
-            mp.stop();
-        }
+        //if (AppSettings.getInstance().getBoolean(AppSettings.METRONOME_SETTING)) {
+        //    mp.stop();
+        //}
         super.onDestroy();
     }
 
@@ -159,12 +168,12 @@ public class RunningActivity extends Activity implements Observer {
             int hours = mins / 60;
             secs = secs % 60;
             if (hours > 0) {
-                timerValue.setText(getString(R.string.time) + ": " + String.format("%02d", hours) + ":"
+                timerValue.setText(String.format("%02d", hours) + ":"
                         + String.format("%02d", mins) + ":"
                         + String.format("%02d", secs));
                 customHandler.postDelayed(this, 0);
             } else {
-                timerValue.setText(getString(R.string.time) + ": " + String.format("%02d", mins) + ":"
+                timerValue.setText(String.format("%02d", mins) + ":"
                         + String.format("%02d", secs));
                 customHandler.postDelayed(this, 0);
             }
@@ -219,11 +228,14 @@ public class RunningActivity extends Activity implements Observer {
         String unitString = measurementUnitString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
 
         String speedPeaceString = speedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
-        String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
+        //String averageSpeedPeaceString = averageSpeedPeaceString(AppSettings.getInstance().getInt(AppSettings.SPEED_PEACE_SETTING));
 
-        speedValue.setText(speedPeaceString + ": " + speedString + " " + unitString);
-        averageSpeedValue.setText(averageSpeedPeaceString + ": " + averageSpeedString + " " + unitString);
-        distanceValue.setText(getString(R.string.distance) + ": " + totalDistanceString + " " + getString(R.string.unit_km));
+        speedLabel.setText(speedPeaceString);
+        speedValue.setText(speedString);
+        speedUnitLabel.setText(unitString);
+        averageSpeedValue.setText(averageSpeedString);
+        averageSpeedUnitLabel.setText(unitString);
+        distanceValue.setText(totalDistanceString);
 
         setSpeedText(R.id.infoMessage, getString(R.string.gpsReady));
         setSpeedText(R.id.speedValue, speedValue.getText().toString());
@@ -284,21 +296,21 @@ public class RunningActivity extends Activity implements Observer {
         return string;
     }
 
-    private String averageSpeedPeaceString(int unitIndex) {
-        Log.i(LOG_TAG, "speedPeaceString -- begin");
-        String string = getString(R.string.averageSpeed);
+    //private String averageSpeedPeaceString(int unitIndex) {
+    //    Log.i(LOG_TAG, "speedPeaceString -- begin");
+    //    String string = getString(R.string.averageSpeed);
+//
+//        switch(unitIndex) {
+    //          case Constants.SPEED_SETTING_KMH:
+    //          string = getString(R.string.averageSpeed);
+    ////          break;
+    //    case Constants.SPEED_SETTING_MIN_KM:
+    //          string = getString(R.string.averagePeace);
+    ////          break;
+    //}
 
-        switch(unitIndex) {
-            case Constants.SPEED_SETTING_KMH:
-                string = getString(R.string.averageSpeed);
-                break;
-            case Constants.SPEED_SETTING_MIN_KM:
-                string = getString(R.string.averagePeace);
-                break;
-        }
-
-        return string;
-    }
+    //  return string;
+    //}
 
     private void setSpeedText(int textid, String text) {
         Log.i(LOG_TAG, "setSpeedText -- begin");

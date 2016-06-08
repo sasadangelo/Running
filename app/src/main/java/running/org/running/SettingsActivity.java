@@ -147,16 +147,17 @@ public class SettingsActivity extends PreferenceActivity implements SharedPrefer
 			String s = listSpeedSettings.getValue().toString();
 			int speedSetting = Integer.parseInt(s);
 			listSpeedSettings.setSummary(listSpeedSettings.getEntry().toString());
-			switch(speedSetting) {
-				case R.id.unit_kmh: {
-					AppSettings.getInstance().putInt(AppSettings.SPEED_PEACE_SETTING, Constants.SPEED_SETTING_KMH);
-					break;
-				}
-				case R.id.unit_mk: {
-					AppSettings.getInstance().putInt(AppSettings.SPEED_PEACE_SETTING, Constants.SPEED_SETTING_MIN_KM);
-					break;
-				}
-			}
+			AppSettings.getInstance().putInt(AppSettings.SPEED_PEACE_SETTING, speedSetting);
+			//switch(speedSetting) {
+			//	case R.id.unit_kmh: {
+			//		AppSettings.getInstance().putInt(AppSettings.SPEED_PEACE_SETTING, Constants.SPEED_SETTING_KMH);
+			//		break;
+			//	}
+			//	case R.id.unit_mk: {
+			//		AppSettings.getInstance().putInt(AppSettings.SPEED_PEACE_SETTING, Constants.SPEED_SETTING_MIN_KM);
+			//		break;
+			//	}
+			//}
 		}
 
 		if (key.equals(KEY_STEPS_BY_MINUTE_SETTINGS)) {
